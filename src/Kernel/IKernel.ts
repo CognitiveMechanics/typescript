@@ -9,8 +9,7 @@ import ITranscluder from '../Transcluder/ITranscluder';
 
 export default interface IKernel extends IComposer, IEnumerator, IExtractor, IMatcher, IRecounter, ITranscluder
 {
-
-
-    define (key: string, entity: Entity) : Entity;
+    state (entity: Entity) : Entity;
+    tag (entity: Entity) : Entity;
     run (state: Entity) : Entity;
 }

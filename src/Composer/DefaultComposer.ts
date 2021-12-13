@@ -7,7 +7,7 @@ export default class DefaultComposer implements  IComposer
 {
 
 
-    public compose(components: Array<Entity>): Entity {
-       return new Entity(components);
+    public compose(name: string, components: Array<Entity>): Entity {
+       return new Entity(name, components);
     }
 }

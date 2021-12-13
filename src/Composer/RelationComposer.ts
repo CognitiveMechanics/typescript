@@ -7,8 +7,8 @@ class RelationComposer implements  IComposer
 {
 
 
-    compose(components: Array<Entity>): Entity {
-        let entity = new Entity(components);
+    compose(name: string, components: Array<Entity>): Entity {
+        let entity = new Entity(name, components);
 
         components.forEach((component) => {
             component.relation(() => entity);
