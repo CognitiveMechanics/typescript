@@ -4,6 +4,7 @@ import Extractor from '../src/Extractor/DefaultExtractor';
 import Transcluder from '../src/Transcluder/DefaultTranscluder';
 import Entity from '../src/Entity/Entity';
 import Proxy from '../src/Proxy/Proxy';
+import Debug from "../src/Debug/Debug";
 
 const composer = new Composer;
 const extractor = new Extractor;
@@ -39,4 +40,4 @@ console.debug(kick1.components[0].components);
 console.debug(X(kick, kicker));
 console.debug(X(kick1, kicker));
 console.debug(kick2.components);
-console.debug(X(kick2, kickee));
+Debug.logStructure(kick2);
