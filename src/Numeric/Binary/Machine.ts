@@ -48,7 +48,7 @@ Mb.state(
         X(s, value),
         c0,
         k0,
-        C('<>', [])
+        C('seq', [])
     );
 });
 
@@ -72,12 +72,14 @@ Mb.state(
 Mb.state(
     specb('sb2', iter, not0, Mb.dot(c1), Proxy, Proxy)
 ).relation((s) => {
+    const newIndex = H0(X(s, index));
+
     return specb(
         'R(sb2)',
-        iter,
+        carry,
         X(s, value),
-        X(X(s, digits), H0(X(s, index))),
-        H0(X(s, index)),
+        X(X(s, digits), newIndex),
+        newIndex,
         T(
             X(s, digits),
             X(s, index),
@@ -89,12 +91,14 @@ Mb.state(
 Mb.state(
     specb('sb3', carry, not0, Mb.dot(c1), Proxy, Proxy)
 ).relation((s) => {
+    const newIndex = H0(X(s, index));
+
     return specb(
         'R(sb3)',
         carry,
         X(s, value),
-        X(X(s, digits), H0(X(s, index))),
-        H0(X(s, index)),
+        X(X(s, digits), newIndex),
+        newIndex,
         T(
             X(s, digits),
             X(s, index),
@@ -110,7 +114,7 @@ Mb.state(
         'R(sb4)',
         iter,
         iH0(X(s, value)) as Entity,
-        X(X(s, digits), c0),
+        X(X(s, digits), k0),
         k0,
         T(
             X(s, digits),

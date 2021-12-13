@@ -1,4 +1,4 @@
-import {Mb, specb, state, begin, iter, carry, end} from '../src/Numeric/Binary/Machine';
+import {Mb, specb, state, begin, iter, carry, end, digits} from '../src/Numeric/Binary/Machine';
 import {c, c0, c1, iH0} from '../src/Numeric/Core';
 import Proxy from "../src/Proxy/Proxy";
 import Debug from "../src/Debug/Debug";
@@ -14,7 +14,7 @@ import Debug from "../src/Debug/Debug";
 // console.log('M(1, 0)', Mb.match(c1, c0));
 // console.log('M(1, •0•)', Mb.match(c1, Mb.dot(c0)));
 
-const s = specb('5', begin, c(5), Proxy, Proxy, Proxy);
+const s = specb('4', begin, c(9), Proxy, Proxy, Proxy);
 const result = Mb.run(s);
 
-Debug.logStructure(result);
+Debug.logStructure(Mb.extract(result, digits));

@@ -6,7 +6,7 @@ import Extractor from '../src/Extractor/DefaultExtractor';
 import Transcluder from '../src/Transcluder/DefaultTranscluder';
 import Entity from '../src/Entity/Entity';
 import Debug from "../src/Debug/Debug";
-import {c, k, eq, gteq, c0} from "../src/Numeric/Core";
+import {c, k, eq, gteq, c0, iH0, H0} from "../src/Numeric/Core";
 
 const composer = new Composer;
 const extractor = new Extractor;
@@ -19,7 +19,7 @@ const T = (a : Entity, b : Entity, c : Entity) => transcluder.transclude(a, b, c
 const seq = C('<>', []);
 
 const seq1 = T(seq, k(0), c(1));
-const seq2 = T(seq1, k(1), c(2));
+const seq2 = T(seq1, k(1), c(1));
 
 Debug.logStructure(seq1);
 Debug.logStructure(seq2);
@@ -35,5 +35,9 @@ console.log('4 >= 5', gteq(c(4), c(5)));
 console.log('4 = 4', eq(c(4), c(4)));
 console.log('4 = 3', eq(c(4), c(3)));
 console.log('4 = 5', eq(c(4), c(5)));
+console.log('k4 = k4', k(4) === k(4));
 console.log('4 === 4', c(4) === c(4));
 console.log('0 === 0', c(0) === c0);
+
+console.log('k4 === H0-1(k5)', k(4) === iH0(k(5)));
+console.log('k5 === H0(k4)', k(5) === H0(k(4)));
