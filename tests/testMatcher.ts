@@ -29,5 +29,3 @@ console.log('Y(Bob, [])', Y(Bob, Proxy));
 console.log('Y(ball, [])', Y(ball, Proxy));
 console.log('Y([], [])', Y(Proxy, Proxy));
 console.log('Y([], [.])', Y(Proxy, DotProxy));
-
-console.log(kicker);

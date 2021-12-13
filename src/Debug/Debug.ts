@@ -14,8 +14,14 @@ export default class Debug {
         return state;
     }
 
-    static logStructure (entity: Entity) {
-        let state = Debug.structure(entity);
+    static logStructure (entity : any) {
+        let state;
+
+        if (entity instanceof Entity) {
+            state = Debug.structure(entity);
+        } else {
+            state = entity;
+        }
 
         console.log(util.inspect(state, {showHidden: false, depth: null}))
     }

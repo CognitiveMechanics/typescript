@@ -19,15 +19,17 @@ export default class DefaultMatcher implements IMatcher {
             let count = against.components.length;
             let score = 0;
 
-            against.components.forEach((againstComponent) => {
+            for (let againstComponent of against.components) {
                 let matches : Array<number> = [];
 
-                match.components.forEach((matchComponent) => {
+                for (let matchComponent of match.components) {
                     matches.push(this.match(matchComponent, againstComponent));
-                });
+                }
 
-                score += Math.max(...matches);
-            });
+                if (matches.length) {
+                    score += Math.max(...matches);
+                }
+            }
 
             return score / count;
         } else {
