@@ -1,6 +1,6 @@
 
 import IKernel from './IKernel';
-
+import IKernelOptions from './IKernelOptions';
 import IComposer from '../Composer/IComposer';
 import DefaultComposer from '../Composer/DefaultComposer';
 import IEnumerator from '../Enumerator/IEnumerator';
@@ -114,17 +114,25 @@ export default class Kernel implements IKernel
     }
 
 
-    public run (entity : Entity) : Entity
+    public run (entity : Entity, options : IKernelOptions = {debug: false, debugTitle: null}) : Entity
     {
         let current = new Entity(entity.name + "'", entity.components);
         let matched = false;
 
         while (true) {
+            if (options.debug) {
+                if (options.debugTitle) {
+                    console.log(options.debugTitle);
+                }
+
+                Debug.logStructure(current);
+            }
+
             for (let state of this.states) {
-               if (this.matcher.match(current, state) === 1 && state.relations.length && ! matched) {
-                   current = state.relations[0](current);
-                   matched = true;
-               }
+                if (this.matcher.match(current, state) === 1 && state.relations.length && ! matched) {
+                    current = state.relations[0](current);
+                    matched = true;
+                }
             }
 
             if (! matched) {

@@ -16,12 +16,12 @@ export default class DefaultTranscluder implements ITranscluder {
             if (subcomponents.indexOf(tag) !== -1) {
                 if (subcomponents.indexOf(Proxy) !== -1) {
                     newComponents.push(new Entity(
-                        component.name + "'",
+                        component.name,
                         subcomponents.map(c => c === Proxy ? transclude : c)
                     ));
                 } else {
                     newComponents.push(new Entity(
-                        component.name + "'",
+                        component.name,
                         [
                             tag,
                             transclude
@@ -46,7 +46,7 @@ export default class DefaultTranscluder implements ITranscluder {
         }
 
         return new Entity(
-            entity.name + "'",
+            entity.name,
             newComponents
         );
     }
