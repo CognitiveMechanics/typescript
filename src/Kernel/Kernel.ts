@@ -1,18 +1,6 @@
 
 import IKernel from './IKernel';
 import IKernelOptions from './IKernelOptions';
-import IComposer from '../Composer/IComposer';
-import DefaultComposer from '../Composer/DefaultComposer';
-import IEnumerator from '../Enumerator/IEnumerator';
-import DefaultEnumerator from '../Enumerator/DefaultEnumerator';
-import IExtractor from '../Extractor/IExtractor';
-import DefaultExtractor from '../Extractor/DefaultExtractor';
-import IMatcher from '../Matcher/IMatcher';
-import DefaultMatcher from '../Matcher/DefaultMatcher';
-import IRecounter from '../Recounter/IRecounter';
-import FullRecounter from '../Recounter/FullRecounter';
-import ITranscluder from '../Transcluder/ITranscluder';
-import DefaultTranscluder from '../Transcluder/DefaultTranscluder';
 import Entity from "../Entity/Entity";
 import Proxy from "../Proxy/Proxy";
 import DotProxy from "../Proxy/DotProxy";
@@ -22,30 +10,8 @@ import Debug from "../Debug/Debug";
 export default class Kernel implements IKernel
 {
     states : Array<Entity> = [];
-
-    composer : IComposer;
-    enumerator : IEnumerator;
-    extractor : IExtractor;
-    matcher : IMatcher;
-    recounter : IRecounter;
-    transcluder : ITranscluder;
-
-
-    public constructor (
-        composer : IComposer = new DefaultComposer,
-        enumerator : IEnumerator = new DefaultEnumerator,
-        extractor : IExtractor = new DefaultExtractor,
-        matcher : IMatcher = new DefaultMatcher,
-        recounter : IRecounter = new FullRecounter,
-        transcluder : ITranscluder = new DefaultTranscluder
-    ) {
-        this.composer = composer;
-        this.enumerator = enumerator;
-        this.extractor = extractor;
-        this.matcher = matcher;
-        this.recounter = recounter;
-        this.transcluder = transcluder;
-    }
+    keys : WeakMap<Entity, Entity> = new WeakMap<Entity, Entity>();
+    private _key : Entity = new Entity('{key}');
 
 
     public state (entity : Entity) : Entity
@@ -65,6 +31,26 @@ export default class Kernel implements IKernel
                 Proxy
             ]
         );
+    }
+
+
+    public key (entity : Entity) : Entity
+    {
+        if (this.keys.has(entity)) {
+            return this.keys.get(entity) as Entity;
+        } else {
+            const keyed = this.compose(
+                '#' + entity.name,
+                [
+                    entity,
+                    this._key
+                ]
+            );
+
+            this.keys.set(entity, keyed);
+
+            return keyed;
+        }
     }
 
 
@@ -129,7 +115,7 @@ export default class Kernel implements IKernel
             }
 
             for (let state of this.states) {
-                if (this.matcher.match(current, state) === 1 && state.relations.length && ! matched) {
+                if (this.match(current, state) === 1 && state.relations.length && ! matched) {
                     current = state.relations[0](current);
                     matched = true;
                 }
@@ -157,36 +143,122 @@ export default class Kernel implements IKernel
 
     public compose(name: string, components: Array<Entity>): Entity
     {
-        return this.composer.compose(name, components);
+        return new Entity(name, components);
     }
 
 
     public enumerate(entity: Entity): Array<Entity>
     {
-        return this.enumerator.enumerate(entity);
+        return entity.components;
     }
 
 
-    public extract(entity: Entity, tag: Entity): Entity | null
+    public extract(entity: Entity, tag: Entity, def: Entity | null = null): Entity | null
     {
-        return this.extractor.extract(entity, tag);
+        const keyed = this.key(tag);
+
+        for (let component of entity.components) {
+            if (component.components.indexOf(keyed) !== -1) {
+                for (let subcomponent of component.components) {
+                    if (subcomponent !== keyed) {
+                        return subcomponent;
+                    }
+                }
+            }
+        }
+
+        return def;
     }
 
 
     public match(match: Entity, against: Entity): number
     {
-        return this.matcher.match(match, against);
+        if (against === Proxy) {
+            return 1;
+        } else if (against === DotProxy) {
+            return match === Proxy ? 1 : 0;
+        } else if (match === against) {
+            return 1;
+        } else if (against.components.length) {
+            let count = against.components.length;
+            let score = 0;
+
+            for (let againstComponent of against.components) {
+                let matches : Array<number> = [];
+
+                for (let matchComponent of match.components) {
+                    matches.push(this.match(matchComponent, againstComponent));
+                }
+
+                if (matches.length) {
+                    score += Math.max(...matches);
+                }
+            }
+
+            return score / count;
+        } else {
+            return 0;
+        }
     }
 
 
     public recount(entity: Entity): Array<Entity>
     {
-        return this.recounter.recount(entity);
+        let entities : Array<Entity> = [];
+
+        entity.relations.forEach((relation) => {
+            entities.push(relation(entity));
+        });
+
+        return entities;
     }
 
 
     public transclude(entity: Entity, tag: Entity, transclude: Entity): Entity
     {
-        return this.transcluder.transclude(entity, tag, transclude);
+        let newComponents : Array<Entity> = [];
+        let replaced = false;
+
+        const keyed = this.key(tag);
+
+        for (let component of entity.components) {
+            let subcomponents = component.components;
+
+            if (subcomponents.indexOf(keyed) !== -1) {
+                if (subcomponents.indexOf(Proxy) !== -1) {
+                    newComponents.push(new Entity(
+                        component.name,
+                        subcomponents.map(c => c === Proxy ? transclude : c)
+                    ));
+                } else {
+                    newComponents.push(new Entity(
+                        component.name,
+                        [
+                            keyed,
+                            transclude
+                        ]
+                    ));
+                }
+
+                replaced = true;
+            } else {
+                newComponents.push(component);
+            }
+        }
+
+        if (! replaced) {
+            newComponents.push(new Entity(
+                tag.name + "'",
+                [
+                    keyed,
+                    transclude
+                ]
+            ));
+        }
+
+        return new Entity(
+            entity.name,
+            newComponents
+        );
     }
 }

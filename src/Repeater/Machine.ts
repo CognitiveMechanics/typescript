@@ -20,7 +20,6 @@ const X = (a : Entity, b : Entity) => {
 
 export const structure = C('structure', []);
 export const times = C('times', []);
-export const times1 = C('times1', []);
 export const tag = C('tag', []);
 export const value = C('value', []);
 
@@ -31,19 +30,6 @@ export function specr (name: string, s: Entity, n: Entity, t: Entity, v: Entity)
         [
             C('[structure]', [structure, s]),
             C('[times]', [times, n]),
-            C('[tag]', [tag, t]),
-            C('[value]',[value, v])
-        ]
-    );
-}
-
-export function specr1 (name: string, s: Entity, n: Entity, t: Entity, v: Entity) : Entity
-{
-    return C(
-        name,
-        [
-            C('[structure]', [structure, s]),
-            C('[times1]', [times1, n]),
             C('[tag]', [tag, t]),
             C('[value]',[value, v])
         ]
@@ -61,22 +47,6 @@ Mr.state(
             X(s, value)
         ),
         iH0(X(s, times)) as Entity,
-        X(s, tag),
-        X(s, value)
-    );
-});
-
-Mr.state(
-    specr1('sr0', Proxy, not0, Proxy, Proxy)
-).relation((s) => {
-    return specr(
-        'R(sr0)',
-        T(
-            DefaultKernel.run(X(s, structure)),
-            X(s, tag),
-            X(s, value)
-        ),
-        iH0(X(s, times1)) as Entity,
         X(s, tag),
         X(s, value)
     );

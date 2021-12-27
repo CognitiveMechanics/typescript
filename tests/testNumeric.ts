@@ -1,31 +1,18 @@
 
-
-import Composer from '../src/Composer/DefaultComposer';
-import Matcher from '../src/Matcher/DefaultMatcher';
-import Extractor from '../src/Extractor/DefaultExtractor';
-import Transcluder from '../src/Transcluder/DefaultTranscluder';
-import Entity from '../src/Entity/Entity';
+import {C, X, T} from "../src/Kernel/DefaultKernel";
 import Debug from "../src/Debug/Debug";
-import {c, k, eq, gteq, c0, iH0, H0} from "../src/Numeric/Core";
-
-const composer = new Composer;
-const extractor = new Extractor;
-const transcluder = new Transcluder;
-
-const C = (a : string, b: Array<Entity>) => composer.compose(a, b);
-const X = (a : Entity, b : Entity) => extractor.extract(a, b);
-const T = (a : Entity, b : Entity, c : Entity) => transcluder.transclude(a, b, c);
+import {c, eq, gteq, c0, H0, iH0, numeral} from "../src/Numeric/Core";
+import Entity from "../src/Entity/Entity";
 
 const seq = C('<>', []);
 
-const seq1 = T(seq, k(0), c(1));
-const seq2 = T(seq1, k(1), c(1));
+const seq1 = T(seq, c(0), c(1));
+const seq2 = T(seq1, c(1), c(1));
 
 Debug.logStructure(seq1);
 Debug.logStructure(seq2);
-
-Debug.logStructure(X(seq2, k(0)));
-Debug.logStructure(X(seq2, k(1)));
+Debug.logStructure(X(seq2, c(0)));
+Debug.logStructure(X(seq2, c(1)));
 
 console.log('0', c(0));
 console.log('4', c(4));
@@ -35,9 +22,11 @@ console.log('4 >= 5', gteq(c(4), c(5)));
 console.log('4 = 4', eq(c(4), c(4)));
 console.log('4 = 3', eq(c(4), c(3)));
 console.log('4 = 5', eq(c(4), c(5)));
-console.log('k4 = k4', k(4) === k(4));
 console.log('4 === 4', c(4) === c(4));
 console.log('0 === 0', c(0) === c0);
 
-console.log('k4 === H0-1(k5)', k(4) === iH0(k(5)));
-console.log('k5 === H0(k4)', k(5) === H0(k(4)));
+console.log('H0(0) == 1', H0(c(0)) === c(1));
+console.log('H0(H0(0)) == 2', H0(H0(c(0))) === c(2));
+console.log('iH0(1) == 0', iH0(c(1)) === c(0));
+console.log('iH0(iH0(2)) == 0', iH0(iH0(c(2)) as Entity) === c(0));
+

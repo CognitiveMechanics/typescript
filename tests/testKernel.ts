@@ -1,5 +1,5 @@
 
-import {DefaultKernel as Kernel, C, M} from '../src/Kernel/DefaultKernel';
+import {DefaultKernel as Kernel, C, Y} from '../src/Kernel/DefaultKernel';
 import Entity from "../src/Entity/Entity";
 import Debug from "../src/Debug/Debug";
 
