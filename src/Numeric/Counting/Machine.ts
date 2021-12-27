@@ -2,7 +2,7 @@ import {c0, H0} from '../Core';
 import Entity from "../../Entity/Entity";
 import Kernel from "../../Kernel/Kernel";
 import Proxy from "../../Proxy/Proxy";
-import {C, X} from "../../Kernel/DefaultKernel";
+import {C, X, k} from "../../Kernel/DefaultKernel";
 
 export const Mc0 = new Kernel;
 
@@ -14,8 +14,8 @@ export function specc0 (name: string, s: Entity, n: Entity) : Entity
     return C(
         name,
         [
-            C('[state]', [Mc0.key(state), s]),
-            C('[numeral]', [Mc0.key(numeral), n]),
+            C('[state]', [k(state), s]),
+            C('[numeral]', [k(numeral), n]),
         ]
     );
 }
