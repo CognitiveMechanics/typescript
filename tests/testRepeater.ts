@@ -1,50 +1,72 @@
 import {Mc0, specc0, begin, state, numeral} from '../src/Numeric/Counting/Machine';
 import {Mr, specr, structure, times} from '../src/Repeater/Machine';
 import {c} from '../src/Numeric/Core';
-import Debug from "../src/Debug/Debug";
-import {DefaultKernel} from "../src/Kernel/DefaultKernel";
-import Entity from "../src/Entity/Entity";
+import {DefaultKernel, X$} from "../src/Kernel/DefaultKernel";
 
 DefaultKernel.extend(Mc0);
 DefaultKernel.extend(Mr);
 
-const s0 = specc0('3', begin, c(0)); // 3
-const s1 = specr('r1', s0, c(3), state, begin); // 3 + 3 = 6
-const s2 = specr('r2', s1, c(3), times, c(3)); // 3 * 3 = 12
-const s3 = specr('r3', s2, c(3), times, c(3)); // 3^3 = 12
+const s0 = specc0('3', begin, c(0)); // 3^0 = 1
+const s1 = specr('r1', s0, c(3), state, begin); // 3^1 = 3
+const s2 = specr('r2', s1, c(3), times, c(3)); // 3^2 = 9
+const s3 = specr('r3', s2, c(3), times, c(3)); // 3^3 = 27
+const s4 = specr('r4', s3, c(3), times, c(3)); // 3^4 = 81
 
-// const r1 = DefaultKernel.run(s1);
-// const r2 = DefaultKernel.run(s2);
-const r = DefaultKernel.run(s0, {debug: true, debugTitle: null});
+const r0 = DefaultKernel.run(s0);
+const r1 = DefaultKernel.run(s1);
+const r2 = DefaultKernel.run(s2);
+const r3 = DefaultKernel.run(s3);
+const r4 = DefaultKernel.run(s4);
 
-// Debug.logStructure(
-//     Mr.extract(
-//         Mr.extract(r1, structure) as Entity,
-//         numeral
-//     )
-// );
-//
-// Debug.logStructure(
-//     Mr.extract(
-//         Mr.extract(
-//             Mr.extract(r2, structure) as Entity,
-//             structure
-//         ) as Entity,
-//         numeral
-//     )
-// );
-//
-// Debug.logStructure(
-//     Mr.extract(
-//         Mr.extract(
-//             Mr.extract(
-//                 Mr.extract(r3, structure) as Entity,
-//                 structure
-//             ) as Entity,
-//             structure
-//         ) as Entity,
-//         numeral
-//     )
-// );
+console.log(
+    X$(
+        r0,
+        numeral
+    )
+);
 
-Debug.logStructure(r);
+console.log(
+    X$(
+        X$(r1, structure),
+        numeral
+    )
+);
+
+console.log(
+    X$(
+        X$(
+            X$(r2, structure),
+            structure
+        ),
+        numeral
+    )
+);
+
+console.log(
+    X$(
+        X$(
+            X$(
+                X$(r3, structure),
+                structure
+            ),
+            structure
+        ),
+        numeral
+    )
+);
+
+console.log(
+    X$(
+        X$(
+            X$(
+                X$(
+                    X$(r4, structure),
+                    structure
+                ),
+                structure
+            ),
+            structure
+        ),
+        numeral
+    )
+);
