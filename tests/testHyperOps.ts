@@ -1,11 +1,8 @@
-import {Mc0, specc0, begin, state, numeral} from '../src/Numeric/Counting/Machine';
-import {Mr, specr, structure, times} from '../src/Repeater/Machine';
+import {Mc0} from '../src/Numeric/Counting/Machine';
+import {Mr} from '../src/Repeater/Machine';
 import {c} from '../src/Numeric/Core';
 import {DefaultKernel, X$} from "../src/Kernel/DefaultKernel";
-import Entity from "../src/Entity/Entity";
-import Debug from "../src/Debug/Debug";
-import {add, Mc1, Mc2, Mc3, mult, exp, product, specc1, specc2, sum} from "../src/Numeric/Counting/Operations";
-import Proxy from "../src/Proxy/Proxy";
+import {add, Mc1, Mc2, Mc3, mult, exp} from "../src/Numeric/Counting/Operations";
 
 DefaultKernel.extend(Mc0);
 DefaultKernel.extend(Mc1);
@@ -25,8 +22,6 @@ DefaultKernel.extend(Mr);
 //     );
 // }
 
-
-
 console.log('0 + 0 = 0', add(c(0), c(0)));
 console.log('0 + 1 = 1', add(c(0), c(1)));
 console.log('1 + 0 = 1', add(c(1), c(0)));
@@ -45,5 +40,6 @@ console.log('12 * 23 = 276', mult(c(12), c(23)));
 
 console.log('1 ^ 0 = 1', exp(c(1), c(0)));
 console.log('4 ^ 0 = 1', exp(c(4), c(0)));
+console.log('4 ^ 1 = 4', exp(c(4), c(1)));
 console.log('2 ^ 3 = 8', exp(c(2), c(3)));
 console.log('3 ^ 2 = 9', exp(c(3), c(2)));
