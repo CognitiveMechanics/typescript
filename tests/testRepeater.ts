@@ -1,5 +1,5 @@
 import {Mc0, specc0, begin, state, numeral} from '../src/Numeric/Counting/Machine';
-import {Mr, specr, structure, times} from '../src/Repeater/Machine';
+import {Mr, specr1, structure, times} from '../src/Repeater/Machine';
 import {c} from '../src/Numeric/Core';
 import {DefaultKernel, X$} from "../src/Kernel/DefaultKernel";
 
@@ -7,10 +7,10 @@ DefaultKernel.extend(Mc0);
 DefaultKernel.extend(Mr);
 
 const s0 = specc0('3', begin, c(0)); // 3^0 = 1
-const s1 = specr('r1', s0, c(3), state, begin); // 3^1 = 3
-const s2 = specr('r2', s1, c(3), times, c(3)); // 3^2 = 9
-const s3 = specr('r3', s2, c(3), times, c(3)); // 3^3 = 27
-const s4 = specr('r4', s3, c(3), times, c(3)); // 3^4 = 81
+const s1 = specr1('r1', s0, c(3), state, begin); // 3^1 = 3
+const s2 = specr1('r2', s1, c(3), times, c(3)); // 3^2 = 9
+const s3 = specr1('r3', s2, c(3), times, c(3)); // 3^3 = 27
+const s4 = specr1('r4', s3, c(3), times, c(3)); // 3^4 = 81
 
 const r0 = DefaultKernel.run(s0);
 const r1 = DefaultKernel.run(s1);
