@@ -6,8 +6,10 @@ import {C, DefaultKernel, k, X, X$} from "../../Kernel/DefaultKernel";
 import Proxy from "../../Proxy/Proxy";
 import {c0, c1, H0, iH0, not0} from "../Core";
 import dotProxy from "../../Proxy/DotProxy";
+import DotProxy from "../../Proxy/DotProxy";
+import Debug from "../../Debug/Debug";
 
-export const [operands, [op1, op2, sum, product, power]] = Mc0.label('operands', ['op1', 'op2', 'sum', 'product', 'power']);
+export const [operands, [op1, op2, sum, product, power, diff]] = Mc0.label('operands', ['op1', 'op2', 'sum', 'product', 'power', 'diff']);
 
 // ADDITION
 
@@ -184,4 +186,66 @@ export function exp (a : Entity, b : Entity) {
     );
 
     return X$(r, power);
+}
+
+// SUBTRACTION
+
+
+export const Mic1 = new Kernel;
+
+export function specic1 (name: string, a: Entity, b: Entity, r: Entity) : Entity
+{
+    return C(
+        name,
+        [
+            C('[op1]', [k(op1), a]),
+            C('[op2]', [k(op2), b]),
+            C('[diff]', [k(diff), r]),
+        ]
+    );
+}
+
+Mic1.state(
+    specic1('isc10', Proxy, Proxy, DotProxy)
+).relation((s : Entity) => {
+    return specic1(
+        'R(sic10)',
+        Proxy,
+        X$(s, op2),
+        X$(s, op1)
+    );
+});
+
+Mic1.state(
+    specic1('isc11', Proxy, not0, not0)
+).relation((s : Entity) => {
+    return specic1(
+        'R(sic11)',
+        Proxy,
+        iH0(X$(s, op2)),
+        iH0(X$(s, diff))
+    );
+});
+
+Mic1.state(
+    specic1('isc12', Proxy, Mc1.dot(c0), Proxy)
+).relation((s : Entity) => {
+    return specic1(
+        'R(sic12)',
+        Proxy,
+        Proxy,
+        X$(s, diff)
+    );
+});
+
+export function sub (a : Entity, b : Entity) {
+    const r = Mic1.run(
+        specic1('sub()', a, b, Proxy)
+    );
+
+    if (X$(r, op2) != Proxy) {
+        return null;
+    } else {
+        return X$(r, diff);
+    }
 }

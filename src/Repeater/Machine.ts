@@ -15,64 +15,6 @@ export const value1 = C('value1', []);
 export const tag2 = C('tag2', []);
 export const value2 = C('value2', []);
 
-// NO SUBS
-
-export function specr0 (name: string, s: Entity, n: Entity) : Entity
-{
-    return C(
-        name,
-        [
-            C('[structure]', [k(structure), s]),
-            C('[times]', [k(times), n])
-        ]
-    );
-}
-
-Mr.state(
-    specr0('sr0', Proxy, not0)
-).relation((s) => {
-    return specr0(
-        'R(sr0)',
-        T(
-            DefaultKernel.run(X$(s, structure)),
-            X$(s, tag),
-            X$(s, value)
-        ),
-        iH0(X$(s, times))
-    );
-});
-
-// 1 SUB
-
-export function specr1 (name: string, s: Entity, n: Entity, t: Entity, v: Entity) : Entity
-{
-    return C(
-        name,
-        [
-            C('[structure]', [k(structure), s]),
-            C('[times]', [k(times), n]),
-            C('[tag]', [k(tag), t]),
-            C('[value]',[k(value), v])
-        ]
-    );
-}
-
-Mr.state(
-    specr1('sr0', Proxy, not0, Proxy, Proxy)
-).relation((s) => {
-    return specr1(
-        'R(sr0)',
-        T(
-            DefaultKernel.run(X$(s, structure)),
-            X$(s, tag),
-            X$(s, value)
-        ),
-        iH0(X$(s, times)),
-        X$(s, tag),
-        X$(s, value)
-    );
-});
-
 // 2 SUBS
 
 export function specr2 (name: string, s: Entity, n: Entity, t1: Entity, v1: Entity, t2: Entity, v2: Entity) : Entity
@@ -109,5 +51,59 @@ Mr.state(
         X$(s, value1),
         X$(s, tag2),
         X$(s, value2)
+    );
+});
+
+// 1 SUB
+
+export function specr1 (name: string, s: Entity, n: Entity, t: Entity, v: Entity) : Entity
+{
+    return C(
+        name,
+        [
+            C('[structure]', [k(structure), s]),
+            C('[times]', [k(times), n]),
+            C('[tag]', [k(tag), t]),
+            C('[value]',[k(value), v])
+        ]
+    );
+}
+
+Mr.state(
+    specr1('sr0', Proxy, not0, Proxy, Proxy)
+).relation((s) => {
+    return specr1(
+        'R(sr0)',
+        T(
+            DefaultKernel.run(X$(s, structure)),
+            X$(s, tag),
+            X$(s, value)
+        ),
+        iH0(X$(s, times)),
+        X$(s, tag),
+        X$(s, value)
+    );
+});
+
+// NO SUBS
+
+export function specr0 (name: string, s: Entity, n: Entity) : Entity
+{
+    return C(
+        name,
+        [
+            C('[structure]', [k(structure), s]),
+            C('[times]', [k(times), n])
+        ]
+    );
+}
+
+Mr.state(
+    specr0('sr0', Proxy, not0)
+).relation((s) => {
+    return specr0(
+        'R(sr0)',
+        DefaultKernel.run(X$(s, structure)),
+        iH0(X$(s, times))
     );
 });

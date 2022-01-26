@@ -2,7 +2,7 @@ import {begin, Mc0, numeral, specc0, state} from '../src/Numeric/Counting/Machin
 import {Mr, specr1, structure, tag, times} from '../src/Repeater/Machine';
 import {c, c0} from '../src/Numeric/Core';
 import {DefaultKernel, X$} from "../src/Kernel/DefaultKernel";
-import {add, Mc1, Mc2, Mc3, mult, exp} from "../src/Numeric/Counting/Operations";
+import {add, Mc1, Mc2, Mc3, mult, exp, sub} from "../src/Numeric/Counting/Operations";
 import Entity from "../src/Entity/Entity";
 
 DefaultKernel.extend(Mc0);
@@ -64,3 +64,10 @@ console.log('4 ^ 0 = 1', exp(c(4), c(0)));
 console.log('4 ^ 1 = 4', exp(c(4), c(1)));
 console.log('2 ^ 3 = 8', exp(c(2), c(3)));
 console.log('3 ^ 2 = 9', exp(c(3), c(2)));
+
+console.log('0 - 0 = 0', sub(c(0), c(0)));
+console.log('1 - 0 = 1', sub(c(1), c(0)));
+console.log('1 - 1 = 0', sub(c(1), c(1)));
+console.log('2 - 1 = 1', sub(c(2), c(1)));
+console.log('7 - 3 = 4', sub(c(7), c(3)));
+console.log('2 - 5 = -3', sub(c(2), c(5)));
