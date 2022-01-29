@@ -14,6 +14,7 @@ export const value = C('value', []);
 export const current = C('current', []);
 export const index = C('index', []);
 export const digits = C('digits', []);
+export const binary = C('binary', []);
 
 export function specb (name: string, s : Entity, v : Entity, c : Entity, i : Entity, d : Entity) : Entity
 {
@@ -25,6 +26,7 @@ export function specb (name: string, s : Entity, v : Entity, c : Entity, i : Ent
             C('[current]', [k(current), c]),
             C('[index]',[k(index), i]),
             C('[digits]', [k(digits), d]),
+            binary,
         ]
     );
 }
