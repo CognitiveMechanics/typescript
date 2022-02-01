@@ -6,6 +6,7 @@ import Proxy from "../Proxy/Proxy";
 import DotProxy from "../Proxy/DotProxy";
 import Debug from "../Debug/Debug";
 import NullEntity from "../Entity/NullEntity";
+import TrueEntity from "../Entity/TrueEntity";
 
 
 export default class Kernel implements IKernel
@@ -116,7 +117,7 @@ export default class Kernel implements IKernel
             }
 
             for (let state of this.states) {
-                if (this.match(current, state) !== NullEntity && state.relations.length && ! matched) {
+                if (this.match(current, state) === TrueEntity && state.relations.length && ! matched) {
                     current = state.relations[0](current);
                     matched = true;
                 }
@@ -175,11 +176,11 @@ export default class Kernel implements IKernel
     public match(match: Entity, against: Entity): Entity
     {
         if (against === Proxy) {
-            return match;
+            return TrueEntity;
         } else if (against === DotProxy) {
-            return match === Proxy ? match : NullEntity;
+            return match === Proxy ? TrueEntity : NullEntity;
         } else if (match === against) {
-            return match;
+            return TrueEntity;
         } else if (against.components.length) {
             for (let againstComponent of against.components) {
                 let matched = false;
@@ -195,7 +196,7 @@ export default class Kernel implements IKernel
                 }
             }
 
-            return match;
+            return TrueEntity;
         } else {
             return NullEntity;
         }

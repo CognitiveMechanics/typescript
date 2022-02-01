@@ -120,7 +120,7 @@ MU.state(
         'R(sU3)',
         X$(s, structure),
         X$(s, configurations),
-        c0,
+        X$(s, index),
         X(X$(s, configurations), c0, Proxy) as Entity,
         NullEntity,
         X$(X$(X$(s, configurations), iH0(X$(s, index))), instruction),
@@ -133,7 +133,7 @@ MU.state(
 MU.state(
     specU('sU4', Proxy, Proxy, anynum, Proxy, Proxy, Proxy, DotProxy)
 ).relation((s) => {
-    console.log('exec')
+    console.log('exec', X$(s, index))
     return specU(
         'R(sU4)',
         DefaultKernel.run(
