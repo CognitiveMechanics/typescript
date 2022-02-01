@@ -102,17 +102,13 @@ export default class Kernel implements IKernel
     }
 
 
-    public run (entity : Entity, options : IKernelOptions = {debug: false, debugTitle: null}) : Entity
+    public run (entity : Entity, options : IKernelOptions = {debug: false}) : Entity
     {
         let current = new Entity(entity.name + "'", entity.components);
         let matched = false;
 
         while (true) {
             if (options.debug) {
-                if (options.debugTitle) {
-                    console.log(options.debugTitle);
-                }
-
                 Debug.logStructure(current);
             }
 

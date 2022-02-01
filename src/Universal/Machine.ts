@@ -6,6 +6,7 @@ import DotProxy from "../Proxy/DotProxy";
 import {anynum, c, c0, H0, iH0} from "../Numeric/Core";
 import NullEntity from "../Entity/NullEntity";
 import Debug from "../Debug/Debug";
+import TrueEntity from "../Entity/TrueEntity";
 
 export const MU = new Kernel;
 
@@ -72,7 +73,7 @@ export function specConfigurations (cs : Array<Record<string, any>>)
 }
 
 
-// init
+// init — set index to zero and next to first configuration
 
 MU.state(
     specU('sU0', Proxy, Proxy, DotProxy, DotProxy, Proxy, DotProxy, DotProxy)
@@ -89,13 +90,36 @@ MU.state(
     )
 });
 
-// stop if there is no next instruction
+// execute instruction
 
 MU.state(
-    specU('sU1', Proxy, Proxy, anynum, DotProxy, Proxy, Proxy, Proxy)
+    specU('sU1', Proxy, Proxy, anynum, Proxy, TrueEntity, Proxy, DotProxy)
 ).relation((s) => {
     return specU(
         'R(sU1)',
+        DefaultKernel.run(
+            specUi(
+                'sUi',
+                X$(s, structure),
+                X$(X$(X$(s, configurations), iH0(X$(s, index))), instruction)
+            )
+        ),
+        X$(s, configurations),
+        c0,
+        X(X$(s, configurations), c0, Proxy) as Entity,
+        NullEntity,
+        Proxy,
+        Proxy
+    )
+});
+
+// stop if there is no next instruction
+
+MU.state(
+    specU('sU2', Proxy, Proxy, anynum, DotProxy, Proxy, Proxy, Proxy)
+).relation((s) => {
+    return specU(
+        'R(sU2)',
         Proxy,
         Proxy,
         Proxy,
@@ -109,56 +133,17 @@ MU.state(
 // set pattern
 
 MU.state(
-    specU('sU2', Proxy, Proxy, anynum, Proxy, NullEntity, DotProxy, DotProxy)
+    specU('sU3', Proxy, Proxy, anynum, Proxy, NullEntity, Proxy, DotProxy)
 ).relation((s) => {
-    return specU(
-        'R(sU2)',
-        X$(s, structure),
-        X$(s, configurations),
-        H0(X$(s, index)),
-        X(X$(s, configurations), c0, Proxy) as Entity,
-        Y(X$(s, structure), X$(X$(X$(s, configurations), X$(s, index)), pattern)),
-        Proxy,
-        Proxy
-    )
-});
 
-// if pattern is set, set instruction
-
-MU.state(
-    specU('sU3', Proxy, Proxy, anynum, Proxy, Proxy, DotProxy, DotProxy)
-).relation((s) => {
     return specU(
         'R(sU3)',
         X$(s, structure),
         X$(s, configurations),
-        X$(s, index),
-        X(X$(s, configurations), c0, Proxy) as Entity,
-        NullEntity,
-        X$(X$(X$(s, configurations), iH0(X$(s, index))), instruction),
-        Proxy
-    )
-});
-
-// execute instruction
-
-MU.state(
-    specU('sU4', Proxy, Proxy, anynum, Proxy, Proxy, Proxy, DotProxy)
-).relation((s) => {
-    return specU(
-        'R(sU4)',
-        DefaultKernel.run(
-            specUi(
-                'sUi',
-                X$(s, structure),
-                X$(X$(X$(s, configurations), iH0(X$(s, index))), instruction)
-            )
-        ),
-        X$(s, configurations),
-        c0,
-        Proxy,
-        NullEntity,
-        Proxy,
+        H0(X$(s, index)),
+        X(X$(s, configurations), H0(X$(s, index)), Proxy) as Entity,
+        Y(X$(s, structure), X$(X$(X$(s, configurations), X$(s, index)), pattern)),
+        X$(X$(X$(s, configurations), X$(s, index)), instruction),
         Proxy
     )
 });
@@ -181,8 +166,6 @@ export function specopC (o1 : Entity, o2 : Entity) {
 MU.state(
     specUi('C', Proxy, specopC(Proxy, Proxy))
 ).relation((s) => {
-    console.log('here');
-
    return MU.compose(
        'R(C)',
        [

@@ -16,7 +16,7 @@ let r = DefaultKernel.run(
         NullEntity,
         specConfigurations([
             {
-                pattern: Proxy,
+                pattern: NullEntity,
                 instruction: specopC(A, B)
             }
         ])
