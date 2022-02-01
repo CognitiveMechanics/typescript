@@ -6,6 +6,9 @@ import Debug from "../src/Debug/Debug";
 
 console.log(state, begin, iter, carry, end);
 
+Debug.logStructure(iter);
+Debug.logStructure(state);
+
 console.log('Y(iter, state)', Y(iter, state));
 console.log('Y(iter, begin)', Y(iter, begin));
 

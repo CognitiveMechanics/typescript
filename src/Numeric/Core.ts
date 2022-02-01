@@ -2,6 +2,7 @@
 import Entity from "../Entity/Entity";
 import Proxy from "../Proxy/Proxy";
 import {k, C, X$, Y} from "../Kernel/DefaultKernel";
+import NullEntity from "../Entity/NullEntity";
 
 declare global {
     var cCache : Record<number, Entity>;
@@ -11,6 +12,7 @@ export const numeral = C('numeral', []);
 export const c0 = C('0', [k(numeral), Proxy]);
 export const c1 = c(1);
 export const not0 = c1;
+export const anynum = c0;
 
 export function H0 (n : Entity) {
     if (! global.cCache) {
@@ -40,7 +42,7 @@ export function iH0 (n : Entity) {
 }
 
 export function gteq (a : Entity, b : Entity) {
-    return Y(a, b) == 1;
+    return Y(a, b) !== NullEntity;
 }
 
 export function eq (a : Entity, b : Entity) {

@@ -5,6 +5,7 @@ import Entity from "../Entity/Entity";
 import Proxy from "../Proxy/Proxy";
 import DotProxy from "../Proxy/DotProxy";
 import Debug from "../Debug/Debug";
+import NullEntity from "../Entity/NullEntity";
 
 
 export default class Kernel implements IKernel
@@ -115,7 +116,7 @@ export default class Kernel implements IKernel
             }
 
             for (let state of this.states) {
-                if (this.match(current, state) === 1 && state.relations.length && ! matched) {
+                if (this.match(current, state) !== NullEntity && state.relations.length && ! matched) {
                     current = state.relations[0](current);
                     matched = true;
                 }
@@ -171,33 +172,32 @@ export default class Kernel implements IKernel
     }
 
 
-    public match(match: Entity, against: Entity): number
+    public match(match: Entity, against: Entity): Entity
     {
         if (against === Proxy) {
-            return 1;
+            return match;
         } else if (against === DotProxy) {
-            return match === Proxy ? 1 : 0;
+            return match === Proxy ? match : NullEntity;
         } else if (match === against) {
-            return 1;
+            return match;
         } else if (against.components.length) {
-            let count = against.components.length;
-            let score = 0;
-
             for (let againstComponent of against.components) {
-                let matches : Array<number> = [];
+                let matched = false;
 
                 for (let matchComponent of match.components) {
-                    matches.push(this.match(matchComponent, againstComponent));
+                    if (this.match(matchComponent, againstComponent) !== NullEntity) {
+                        matched = true;
+                    }
                 }
 
-                if (matches.length) {
-                    score += Math.max(...matches);
+                if (! matched) {
+                    return NullEntity;
                 }
             }
 
-            return score / count;
+            return match;
         } else {
-            return 0;
+            return NullEntity;
         }
     }
 
