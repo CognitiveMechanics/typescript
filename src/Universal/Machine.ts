@@ -1,9 +1,9 @@
 import Kernel from "../Kernel/Kernel";
-import {C, DefaultKernel, k, X, X$, Y} from "../Kernel/DefaultKernel";
+import {C, DefaultKernel, k, X, X$, Y, T} from "../Kernel/DefaultKernel";
 import Entity from "../Entity/Entity";
 import Proxy from "../Proxy/Proxy";
 import DotProxy from "../Proxy/DotProxy";
-import {anynum, c0, H0, iH0} from "../Numeric/Core";
+import {anynum, c, c0, H0, iH0} from "../Numeric/Core";
 import NullEntity from "../Entity/NullEntity";
 import Debug from "../Debug/Debug";
 
@@ -54,13 +54,29 @@ export function specUi (name: string, s : Entity, j : Entity) : Entity
     );
 }
 
+export function specConfigurations (cs : Array<Record<string, any>>)
+{
+    let configs = C('[configurations]', []);
+
+    for (let i = 0; i < cs.length; i += 1) {
+        configs = T(configs, c(i), C(
+            '[configuration]',
+            [
+                C('[pattern]', [k(pattern), cs[i].pattern]),
+                C('[instruction]', [k(instruction), cs[i].instruction]),
+            ]
+        ));
+    }
+
+    return configs;
+}
+
 
 // init
 
 MU.state(
     specU('sU0', Proxy, Proxy, DotProxy, DotProxy, Proxy, DotProxy, DotProxy)
 ).relation((s) => {
-    console.log('init')
     return specU(
         'R(sU0)',
         X$(s, structure),
@@ -78,7 +94,6 @@ MU.state(
 MU.state(
     specU('sU1', Proxy, Proxy, anynum, DotProxy, Proxy, Proxy, Proxy)
 ).relation((s) => {
-    console.log('no next stop')
     return specU(
         'R(sU1)',
         Proxy,
@@ -96,7 +111,6 @@ MU.state(
 MU.state(
     specU('sU2', Proxy, Proxy, anynum, Proxy, NullEntity, DotProxy, DotProxy)
 ).relation((s) => {
-    console.log('set pattern')
     return specU(
         'R(sU2)',
         X$(s, structure),
@@ -114,8 +128,6 @@ MU.state(
 MU.state(
     specU('sU3', Proxy, Proxy, anynum, Proxy, Proxy, DotProxy, DotProxy)
 ).relation((s) => {
-    console.log('set inst')
-    Debug.logStructure(s);
     return specU(
         'R(sU3)',
         X$(s, structure),
@@ -133,7 +145,6 @@ MU.state(
 MU.state(
     specU('sU4', Proxy, Proxy, anynum, Proxy, Proxy, Proxy, DotProxy)
 ).relation((s) => {
-    console.log('exec', X$(s, index))
     return specU(
         'R(sU4)',
         DefaultKernel.run(
