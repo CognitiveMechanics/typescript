@@ -8,12 +8,13 @@ import Debug from "../Debug/Debug";
 import NullEntity from "../Entity/NullEntity";
 import TrueEntity from "../Entity/TrueEntity";
 
+export const key = new Entity('{key}');
+export const keys = new WeakMap<Entity, Entity>();
+
 
 export default class Kernel implements IKernel
 {
     states : Array<Entity> = [];
-    keys : WeakMap<Entity, Entity> = new WeakMap<Entity, Entity>();
-    private _key : Entity = new Entity('{key}');
 
 
     public state (entity : Entity) : Entity
@@ -24,12 +25,12 @@ export default class Kernel implements IKernel
     }
 
 
-    public tag (entity : Entity) : Entity
+    public tag (tag : Entity, value : Entity = Proxy) : Entity
     {
         return this.compose(
-            '[' + entity.name + ']',
+            '[' + tag.name + ']',
             [
-                entity,
+                this.key(tag),
                 Proxy
             ]
         );
@@ -38,18 +39,18 @@ export default class Kernel implements IKernel
 
     public key (entity : Entity) : Entity
     {
-        if (this.keys.has(entity)) {
-            return this.keys.get(entity) as Entity;
+        if (keys.has(entity)) {
+            return keys.get(entity) as Entity;
         } else {
             const keyed = this.compose(
                 '#' + entity.name,
                 [
                     entity,
-                    this._key
+                    key
                 ]
             );
 
-            this.keys.set(entity, keyed);
+            keys.set(entity, keyed);
 
             return keyed;
         }

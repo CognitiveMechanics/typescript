@@ -8,7 +8,7 @@ export default interface IKernel
     states : Array<Entity>;
 
     state (entity: Entity) : Entity;
-    tag (entity: Entity) : Entity;
+    tag (entity: Entity, value : Entity) : Entity;
     key (entity : Entity) : Entity;
     label (name : string, values : Array<string>) : [Entity, Array<Entity>];
     dot (entity : Entity) : Entity;

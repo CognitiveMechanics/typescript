@@ -18,6 +18,8 @@ export const pattern = C('pattern', []);
 export const instruction = C('instruction', []);
 export const result = C('result', []);
 
+export const ref = C('ref', []);
+
 export const op = C('op', []);
 export const op1 = C('op1', []);
 export const op2 = C('op2', []);
@@ -72,6 +74,9 @@ export function specConfigurations (cs : Array<Record<string, any>>)
     return configs;
 }
 
+export function specRef (a : Entity) {
+    return C('&' + a.name, [k(ref), a]);
+}
 
 // init — set index to zero and next to first configuration
 
@@ -146,31 +151,4 @@ MU.state(
         X$(X$(X$(s, configurations), X$(s, index)), instruction),
         Proxy
     )
-});
-
-// construction
-
-export const opC = C('opC', []);
-
-export function specopC (o1 : Entity, o2 : Entity) {
-    return C(
-        'opC',
-        [
-            C('[op]', [k(op), opC]),
-            C('[op1]', [k(op1), o1]),
-            C('[op2]', [k(op2), o2]),
-        ]
-    );
-}
-
-MU.state(
-    specUi('C', Proxy, specopC(Proxy, Proxy))
-).relation((s) => {
-   return MU.compose(
-       'R(C)',
-       [
-           X$(X$(s, instruction), op1),
-           X$(X$(s, instruction), op2),
-       ]
-   )
 });
