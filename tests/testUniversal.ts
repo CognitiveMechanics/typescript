@@ -1,34 +1,27 @@
 
 import {MU, specMU, specConfigurations, specRef} from '../src/Universal/Machine';
-import {C, DefaultKernel, k, Y} from "../src/Kernel/DefaultKernel";
+import {C, O, DefaultKernel, k, Y, tag} from "../src/Kernel/DefaultKernel";
 import Proxy from "../src/Proxy/Proxy";
 import Debug from "../src/Debug/Debug";
-import NullEntity from "../src/Entity/NullEntity";
 import {specopC} from "../src/Universal/Operations";
 
 DefaultKernel.extend(MU);
 
-let a = C('a', []);
-let b = C('b', []);
-let c = C('c', []);
+let a = C('a');
+let b = C('b');
+let c = C('c');
 
 let r = DefaultKernel.run(
     specMU(
         'test',
-        C(
-            'struc',
-            [
-                C('', [k(a), b])
-            ]
-        ),
+        O([
+            tag(a, b)
+        ]),
         specConfigurations([
             {
-                pattern: C(
-                    'struc',
-                    [
-                        C('', [k(a), b])
-                    ]
-                ),
+                pattern: O([
+                    tag(a, Proxy)
+                ]),
                 instruction: specopC(specRef(a), c)
             }
         ])

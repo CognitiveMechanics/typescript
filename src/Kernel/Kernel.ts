@@ -31,7 +31,7 @@ export default class Kernel implements IKernel
             '[' + tag.name + ']',
             [
                 this.key(tag),
-                Proxy
+                value
             ]
         );
     }
