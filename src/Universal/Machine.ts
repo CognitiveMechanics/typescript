@@ -1,11 +1,10 @@
 import Kernel from "../Kernel/Kernel";
-import {C, DefaultKernel, k, X, X$, Y, T} from "../Kernel/DefaultKernel";
+import {C, k, X, X$, Y, T} from "../Kernel/DefaultKernel";
 import Entity from "../Entity/Entity";
 import Proxy from "../Proxy/Proxy";
 import DotProxy from "../Proxy/DotProxy";
 import {anynum, c, c0, H0, iH0} from "../Numeric/Core";
 import NullEntity from "../Entity/NullEntity";
-import Debug from "../Debug/Debug";
 import TrueEntity from "../Entity/TrueEntity";
 
 export const MU = new Kernel;
@@ -20,11 +19,11 @@ export const result = C('result', []);
 
 export const ref = C('ref', []);
 
-export const op = C('op', []);
-export const op1 = C('op1', []);
-export const op2 = C('op2', []);
-export const op3 = C('op3', []);
-export const op4 = C('op4', []);
+export const op = C('Uop', []);
+export const op1 = C('Uop1', []);
+export const op2 = C('Uop2', []);
+export const op3 = C('Uop3', []);
+export const op4 = C('Uop4', []);
 
 export function specMU (name: string, s : Entity, c : Entity) {
     return specU(name, s, c, Proxy, Proxy, Proxy, Proxy, Proxy);
@@ -78,6 +77,10 @@ export function specRef (a : Entity) {
     return C('&' + a.name, [k(ref), a]);
 }
 
+export function evalUi (s : Entity, i : Entity) {
+    return X$(MU.run(specUi('eval', s, i)), instruction);
+}
+
 // init — set index to zero and next to first configuration
 
 MU.state(
@@ -102,12 +105,9 @@ MU.state(
 ).relation((s) => {
     return specU(
         'R(sU1)',
-        DefaultKernel.run(
-            specUi(
-                'sUi',
-                X$(s, structure),
-                X$(X$(X$(s, configurations), iH0(X$(s, index))), instruction)
-            )
+        evalUi(
+            X$(s, structure),
+            X$(X$(X$(s, configurations), iH0(X$(s, index))), instruction)
         ),
         X$(s, configurations),
         c0,
@@ -140,7 +140,6 @@ MU.state(
 MU.state(
     specU('sU3', Proxy, Proxy, anynum, Proxy, NullEntity, Proxy, DotProxy)
 ).relation((s) => {
-
     return specU(
         'R(sU3)',
         X$(s, structure),
