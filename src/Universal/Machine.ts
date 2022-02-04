@@ -107,7 +107,7 @@ MU.state(
         'R(sU1)',
         evalUi(
             X$(s, structure),
-            X$(X$(X$(s, configurations), iH0(X$(s, index))), instruction)
+            X$(s, instruction)
         ),
         X$(s, configurations),
         c0,
