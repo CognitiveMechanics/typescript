@@ -2,7 +2,7 @@ import Kernel from "../../Kernel/Kernel";
 import {begin, end, Mc0, numeral, state} from "./Machine";
 import {Mr} from "../../Repeater/Machine";
 import Entity from "../../Entity/Entity";
-import {C, DefaultKernel, k, X, X$} from "../../Kernel/DefaultKernel";
+import {C, DefaultKernel, k, X} from "../../Kernel/DefaultKernel";
 import Proxy from "../../Proxy/Proxy";
 import {c0, c1, H0, iH0, not0} from "../Core";
 import dotProxy from "../../Proxy/DotProxy";
@@ -35,8 +35,8 @@ Mc1.state(
 ).relation((s : Entity) => {
     return specc1(
         'R(sc00)',
-        iH0(X$(s, op1)),
-        H0(X$(s, op2)),
+        iH0(X(s, op1)),
+        H0(X(s, op2)),
         Proxy
     );
 });
@@ -48,7 +48,7 @@ Mc1.state(
         'R(sc00)',
         Proxy,
         Proxy,
-        X$(s, op2)
+        X(s, op2)
     );
 });
 
@@ -57,7 +57,7 @@ export function add (a : Entity, b : Entity) {
         specc1('add()', a, b, Proxy)
     );
 
-    return X$(r, sum);
+    return X(r, sum);
 }
 
 // MULTIPLICATION
@@ -84,8 +84,8 @@ Mc2.state(
 ).relation((s : Entity) => {
     return specc2(
         'R(sc20)',
-        X$(s, op1),
-        X$(s, op2),
+        X(s, op1),
+        X(s, op2),
         c0
     );
 });
@@ -94,14 +94,14 @@ Mc2.state(
     specc2('sc21', not0, Proxy, Proxy)
 ).relation((s : Entity) => {
     const r = Mc1.run(
-        specc1('Mc1()', X$(s, product), X$(s, op2), Proxy)
+        specc1('Mc1()', X(s, product), X(s, op2), Proxy)
     );
 
     return specc2(
         'R(sc21)',
-        iH0(X$(s, op1)),
-        X$(s, op2),
-        X$(r, sum)
+        iH0(X(s, op1)),
+        X(s, op2),
+        X(r, sum)
     );
 });
 
@@ -112,7 +112,7 @@ Mc2.state(
         'R(sc22)',
         Proxy,
         Proxy,
-        X$(s, product)
+        X(s, product)
     );
 });
 
@@ -121,7 +121,7 @@ export function mult (a : Entity, b : Entity) {
         specc2('mult()', a, b, Proxy)
     );
 
-    return X$(r, product);
+    return X(r, product);
 }
 
 // EXPONENTIATION
@@ -148,8 +148,8 @@ Mc3.state(
 ).relation((s : Entity) => {
     return specc3(
         'R(sc30)',
-        X$(s, op1),
-        X$(s, op2),
+        X(s, op1),
+        X(s, op2),
         c1
     );
 });
@@ -158,14 +158,14 @@ Mc3.state(
     specc3('sc31', Proxy, not0, Proxy)
 ).relation((s : Entity) => {
     const r = Mc2.run(
-        specc2('Mc2()', X$(s, power), X$(s, op1), Proxy)
+        specc2('Mc2()', X(s, power), X(s, op1), Proxy)
     );
 
     return specc3(
         'R(sc31)',
-        X$(s, op1),
-        iH0(X$(s, op2)),
-        X$(r, product)
+        X(s, op1),
+        iH0(X(s, op2)),
+        X(r, product)
     );
 });
 
@@ -176,7 +176,7 @@ Mc3.state(
         'R(sc32)',
         Proxy,
         Proxy,
-        X$(s, power)
+        X(s, power)
     );
 });
 
@@ -185,7 +185,7 @@ export function exp (a : Entity, b : Entity) {
         specc3('exp()', a, b, Proxy)
     );
 
-    return X$(r, power);
+    return X(r, power);
 }
 
 // SUBTRACTION
@@ -211,8 +211,8 @@ Mic1.state(
     return specic1(
         'R(sic10)',
         Proxy,
-        X$(s, op2),
-        X$(s, op1)
+        X(s, op2),
+        X(s, op1)
     );
 });
 
@@ -222,8 +222,8 @@ Mic1.state(
     return specic1(
         'R(sic11)',
         Proxy,
-        iH0(X$(s, op2)),
-        iH0(X$(s, diff))
+        iH0(X(s, op2)),
+        iH0(X(s, diff))
     );
 });
 
@@ -234,7 +234,7 @@ Mic1.state(
         'R(sic12)',
         Proxy,
         Proxy,
-        X$(s, diff)
+        X(s, diff)
     );
 });
 
@@ -243,9 +243,9 @@ export function sub (a : Entity, b : Entity) {
         specic1('sub()', a, b, Proxy)
     );
 
-    if (X$(r, op2) != Proxy) {
+    if (X(r, op2) != Proxy) {
         return null;
     } else {
-        return X$(r, diff);
+        return X(r, diff);
     }
 }

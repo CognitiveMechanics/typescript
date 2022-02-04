@@ -1,6 +1,6 @@
 
 
-import {C, DefaultKernel, k, X, X$} from "../src/Kernel/DefaultKernel";
+import {C, DefaultKernel, k, X} from "../src/Kernel/DefaultKernel";
 import {Mr, specr1, specr2, structure} from "../src/Repeater/Machine";
 import Kernel from "../src/Kernel/Kernel";
 import Entity from "../src/Entity/Entity";
@@ -38,8 +38,8 @@ MC.state(
             C(
                 'R(sC0*)',
                 [
-                    X$(s, op1),
-                    X$(s, op2)
+                    X(s, op1),
+                    X(s, op2)
                 ]
             )
         );
@@ -72,7 +72,7 @@ let res2 = DefaultKernel.run(
 Debug.logStructure(X(res2, structure));
 
 function Cop (A: Entity, B: Entity) {
-    return X$(
+    return X(
         DefaultKernel.run(
             specC('C()', begin, A, B)
         ),
@@ -101,12 +101,12 @@ Mex.state(
     (s) => {
         return specex(
             'R(sex0)',
-            X$(s, op1),
+            X(s, op1),
             Cop(
-                X$(s, op1),
-                X$(s, op2)
+                X(s, op1),
+                X(s, op2)
             ),
-            iH0(X$(s, numeral))
+            iH0(X(s, numeral))
         );
     }
 );
@@ -123,5 +123,5 @@ let res3 = DefaultKernel.run(
 );
 
 Debug.logStructure(
-    X$(res3, op2)
+    X(res3, op2)
 );

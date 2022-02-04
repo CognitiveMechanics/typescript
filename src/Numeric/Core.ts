@@ -1,7 +1,7 @@
 
 import Entity from "../Entity/Entity";
 import Proxy from "../Proxy/Proxy";
-import {k, C, X$, Y} from "../Kernel/DefaultKernel";
+import {k, C, X, Y} from "../Kernel/DefaultKernel";
 import NullEntity from "../Entity/NullEntity";
 
 declare global {
@@ -38,7 +38,7 @@ export function H0 (n : Entity) {
 }
 
 export function iH0 (n : Entity) {
-    return X$(C('n', [n]), numeral);
+    return X(C('n', [n]), numeral);
 }
 
 export function gteq (a : Entity, b : Entity) {

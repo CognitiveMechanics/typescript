@@ -1,7 +1,7 @@
 import {c0, c1, iH0, not0} from '../Numeric/Core';
 import Entity from "../Entity/Entity";
 import Kernel from "../Kernel/Kernel";
-import {DefaultKernel, C, T, X$, k} from "../Kernel/DefaultKernel";
+import {DefaultKernel, C, T, X, k} from "../Kernel/DefaultKernel";
 import Proxy from "../Proxy/Proxy";
 
 export const Mr = new Kernel;
@@ -39,18 +39,18 @@ Mr.state(
         'R(sr0)',
         T(
             T(
-                DefaultKernel.run(X$(s, structure)),
-                X$(s, tag1),
-                X$(s, value1)
+                DefaultKernel.run(X(s, structure)),
+                X(s, tag1),
+                X(s, value1)
             ),
-            X$(s, tag2),
-            X$(s, value2)
+            X(s, tag2),
+            X(s, value2)
         ),
-        iH0(X$(s, times)),
-        X$(s, tag1),
-        X$(s, value1),
-        X$(s, tag2),
-        X$(s, value2)
+        iH0(X(s, times)),
+        X(s, tag1),
+        X(s, value1),
+        X(s, tag2),
+        X(s, value2)
     );
 });
 
@@ -75,13 +75,13 @@ Mr.state(
     return specr1(
         'R(sr0)',
         T(
-            DefaultKernel.run(X$(s, structure)),
-            X$(s, tag),
-            X$(s, value)
+            DefaultKernel.run(X(s, structure)),
+            X(s, tag),
+            X(s, value)
         ),
-        iH0(X$(s, times)),
-        X$(s, tag),
-        X$(s, value)
+        iH0(X(s, times)),
+        X(s, tag),
+        X(s, value)
     );
 });
 
@@ -103,7 +103,7 @@ Mr.state(
 ).relation((s) => {
     return specr0(
         'R(sr0)',
-        DefaultKernel.run(X$(s, structure)),
-        iH0(X$(s, times))
+        DefaultKernel.run(X(s, structure)),
+        iH0(X(s, times))
     );
 });

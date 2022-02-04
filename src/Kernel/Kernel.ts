@@ -152,7 +152,7 @@ export default class Kernel implements IKernel
     }
 
 
-    public extract(entity: Entity, tag: Entity, def: Entity | null = null): Entity | null
+    public extract(entity: Entity, tag: Entity, def: Entity | null = null): Entity
     {
         const keyed = this.key(tag);
 
@@ -166,7 +166,11 @@ export default class Kernel implements IKernel
             }
         }
 
-        return def;
+        if (def instanceof Entity) {
+            return def as Entity;
+        } else {
+            throw new Error('Invalid extracttion');
+        }
     }
 
 

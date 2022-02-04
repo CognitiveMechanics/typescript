@@ -1,5 +1,5 @@
 
-import {MU, op1, op2, op3, specMU, specConfigurations, specRef, evalUi} from '../src/Universal/Machine';
+import {MU, op1, op2, op3, specMU, specConfigurations, specRef} from '../src/Universal/Machine';
 import {C, O, DefaultKernel, k, Y, tag} from "../src/Kernel/DefaultKernel";
 import Proxy from "../src/Proxy/Proxy";
 import Debug from "../src/Debug/Debug";

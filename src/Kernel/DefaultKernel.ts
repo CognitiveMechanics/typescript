@@ -13,16 +13,6 @@ export const T = (a : Entity, b : Entity, c : Entity) => DefaultKernel.transclud
 export const X = (a : Entity, b : Entity, def: Entity | null = null) => DefaultKernel.extract(a, b, def);
 export const O = (entities : Array<Entity>) => DefaultKernel.compose('@', entities);
 
-export const X$ = (a : Entity, b : Entity) : Entity => {
-    const r = X(a, b);
-
-    if (! r) {
-        throw new Error('Invalid ');
-    }
-
-    return r as Entity;
-};
-
 export const k = (a : Entity) => DefaultKernel.key(a);
 export const dot = (a : Entity) => DefaultKernel.dot(a);
 export const tag = (tag : Entity, entity : Entity = Proxy) => DefaultKernel.tag(tag, entity);

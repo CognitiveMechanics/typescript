@@ -3,7 +3,7 @@ import Entity from "../../Entity/Entity";
 import Kernel from "../../Kernel/Kernel";
 import Proxy from "../../Proxy/Proxy";
 import Debug from "../../Debug/Debug";
-import {C, T, X, X$, k, dot} from "../../Kernel/DefaultKernel";
+import {C, T, X, k, dot} from "../../Kernel/DefaultKernel";
 export const Md = new Kernel;
 
 const k0 = k(c0);
@@ -37,7 +37,7 @@ Md.state(
     return specd(
         'R(sd0)',
         iter,
-        X$(s, value),
+        X(s, value),
         c0,
         c0,
         C('seq', [])
@@ -47,17 +47,17 @@ Md.state(
 Md.state(
     specd('sd1', iter, not0, c(9), Proxy, Proxy)
 ).relation((s) => {
-    const newIndex = H0(X$(s, index));
+    const newIndex = H0(X(s, index));
 
     return specd(
         'R(sd1)',
         carry,
-        X$(s, value),
-        X(X$(s, digits), newIndex, c0) as Entity,
+        X(s, value),
+        X(X(s, digits), newIndex, c0) as Entity,
         newIndex,
         T(
-            X$(s, digits),
-            X$(s, index),
+            X(s, digits),
+            X(s, index),
             c0
         )
     );
@@ -69,13 +69,13 @@ Md.state(
     return specd(
         'R(sd2)',
         iter,
-        iH0(X$(s, value)),
-        H0(X$(s, current)),
-        X$(s, index),
+        iH0(X(s, value)),
+        H0(X(s, current)),
+        X(s, index),
         T(
-            X$(s, digits),
-            X$(s, index),
-            H0(X$(s, current))
+            X(s, digits),
+            X(s, index),
+            H0(X(s, current))
         )
     );
 });
@@ -83,17 +83,17 @@ Md.state(
 Md.state(
     specd('sd3', carry, not0, dot(c(9)), Proxy, Proxy)
 ).relation((s) => {
-    const newIndex = H0(X$(s, index));
+    const newIndex = H0(X(s, index));
 
     return specd(
         'R(sd3)',
         carry,
-        X$(s, value),
-        X(X$(s, digits), newIndex, c0) as Entity,
+        X(s, value),
+        X(X(s, digits), newIndex, c0) as Entity,
         newIndex,
         T(
-            X$(s, digits),
-            X$(s, index),
+            X(s, digits),
+            X(s, index),
             c0
         )
     );
@@ -105,13 +105,13 @@ Md.state(
     return specd(
         'R(sd4)',
         iter,
-        iH0(X$(s, value)),
-        X$(X$(s, digits), c0),
+        iH0(X(s, value)),
+        X(X(s, digits), c0),
         c0,
         T(
-            X$(s, digits),
-            X$(s, index),
-            H0(X$(s, current)),
+            X(s, digits),
+            X(s, index),
+            H0(X(s, current)),
         )
     );
 });
@@ -126,6 +126,6 @@ Md.state(
         Proxy,
         Proxy,
         Proxy,
-        X$(s, digits)
+        X(s, digits)
     );
 });

@@ -1,7 +1,7 @@
 import {Mc0, specc0, begin, state, numeral} from '../src/Numeric/Counting/Machine';
 import {Mr, specr1, structure, times} from '../src/Repeater/Machine';
 import {c} from '../src/Numeric/Core';
-import {DefaultKernel, X$} from "../src/Kernel/DefaultKernel";
+import {DefaultKernel, X} from "../src/Kernel/DefaultKernel";
 
 DefaultKernel.extend(Mc0);
 DefaultKernel.extend(Mr);
@@ -19,23 +19,23 @@ const r3 = DefaultKernel.run(s3);
 const r4 = DefaultKernel.run(s4);
 
 console.log(
-    X$(
+    X(
         r0,
         numeral
     )
 );
 
 console.log(
-    X$(
-        X$(r1, structure),
+    X(
+        X(r1, structure),
         numeral
     )
 );
 
 console.log(
-    X$(
-        X$(
-            X$(r2, structure),
+    X(
+        X(
+            X(r2, structure),
             structure
         ),
         numeral
@@ -43,10 +43,10 @@ console.log(
 );
 
 console.log(
-    X$(
-        X$(
-            X$(
-                X$(r3, structure),
+    X(
+        X(
+            X(
+                X(r3, structure),
                 structure
             ),
             structure
@@ -56,11 +56,11 @@ console.log(
 );
 
 console.log(
-    X$(
-        X$(
-            X$(
-                X$(
-                    X$(r4, structure),
+    X(
+        X(
+            X(
+                X(
+                    X(r4, structure),
                     structure
                 ),
                 structure

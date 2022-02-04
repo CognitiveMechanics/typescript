@@ -18,7 +18,7 @@ export default interface IKernel
 
     compose(name: string, components: Array<Entity>): Entity;
     enumerate(entity: Entity): Array<Entity>;
-    extract(entity: Entity, tag: Entity, def: Entity | null): Entity | null;
+    extract(entity: Entity, tag: Entity, def: Entity | null): Entity;
     match(match: Entity, against: Entity): Entity;
     recount(entity: Entity): Array<Entity>;
     transclude(entity: Entity, tag: Entity, transclude: Entity): Entity;

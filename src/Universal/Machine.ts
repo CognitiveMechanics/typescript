@@ -1,5 +1,5 @@
 import Kernel from "../Kernel/Kernel";
-import {C, k, X, X$, Y, T} from "../Kernel/DefaultKernel";
+import {C, k, X, Y, T} from "../Kernel/DefaultKernel";
 import Entity from "../Entity/Entity";
 import Proxy from "../Proxy/Proxy";
 import DotProxy from "../Proxy/DotProxy";
@@ -78,7 +78,7 @@ export function specRef (a : Entity) {
 }
 
 export function evalUi (s : Entity, i : Entity) {
-    return X$(MU.run(specUi('eval', s, i)), instruction);
+    return X(MU.run(specUi('eval', s, i)), instruction);
 }
 
 // init — set index to zero and next to first configuration
@@ -88,10 +88,10 @@ MU.state(
 ).relation((s) => {
     return specU(
         'R(sU0)',
-        X$(s, structure),
-        X$(s, configurations),
+        X(s, structure),
+        X(s, configurations),
         c0,
-        X(X$(s, configurations), c0, Proxy) as Entity,
+        X(X(s, configurations), c0, Proxy) as Entity,
         NullEntity,
         Proxy,
         Proxy
@@ -106,12 +106,12 @@ MU.state(
     return specU(
         'R(sU1)',
         evalUi(
-            X$(s, structure),
-            X$(s, instruction)
+            X(s, structure),
+            X(s, instruction)
         ),
-        X$(s, configurations),
+        X(s, configurations),
         c0,
-        X(X$(s, configurations), c0, Proxy) as Entity,
+        X(X(s, configurations), c0, Proxy) as Entity,
         NullEntity,
         Proxy,
         Proxy
@@ -131,7 +131,7 @@ MU.state(
         Proxy,
         Proxy,
         Proxy,
-        X$(s, structure)
+        X(s, structure)
     )
 });
 
@@ -142,12 +142,12 @@ MU.state(
 ).relation((s) => {
     return specU(
         'R(sU3)',
-        X$(s, structure),
-        X$(s, configurations),
-        H0(X$(s, index)),
-        X(X$(s, configurations), H0(X$(s, index)), Proxy) as Entity,
-        Y(X$(s, structure), X$(X$(X$(s, configurations), X$(s, index)), pattern)),
-        X$(X$(X$(s, configurations), X$(s, index)), instruction),
+        X(s, structure),
+        X(s, configurations),
+        H0(X(s, index)),
+        X(X(s, configurations), H0(X(s, index)), Proxy) as Entity,
+        Y(X(s, structure), X(X(X(s, configurations), X(s, index)), pattern)),
+        X(X(X(s, configurations), X(s, index)), instruction),
         Proxy
     )
 });

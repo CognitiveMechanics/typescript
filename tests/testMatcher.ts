@@ -1,15 +1,8 @@
 
-import Composer from '../src/Composer/DefaultComposer';
-import Matcher from '../src/Matcher/DefaultMatcher';
+import {C, Y} from '../src/Kernel/DefaultKernel';
 import Entity from '../src/Entity/Entity';
 import Proxy from '../src/Proxy/Proxy';
 import DotProxy from '../src/Proxy/DotProxy';
-
-const composer = new Composer;
-const matcher = new Matcher;
-
-const C = (a : string, b: Array<Entity>) => composer.compose(a, b);
-const Y = (a : Entity, b : Entity) => matcher.match(a, b);
 
 const physicalObject = C('physical-object', []);
 const hasLegs = C('has-legs', []);

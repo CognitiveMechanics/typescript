@@ -1,7 +1,7 @@
 import {begin, Mc0, numeral, specc0, state} from '../src/Numeric/Counting/Machine';
 import {Mr, specr1, structure, tag, times} from '../src/Repeater/Machine';
 import {c, c0} from '../src/Numeric/Core';
-import {DefaultKernel, X$} from "../src/Kernel/DefaultKernel";
+import {DefaultKernel, X} from "../src/Kernel/DefaultKernel";
 import {add, Mc1, Mc2, Mc3, mult, exp, sub} from "../src/Numeric/Counting/Operations";
 import Entity from "../src/Entity/Entity";
 
@@ -23,8 +23,8 @@ DefaultKernel.extend(Mr);
 //
 //     const r = DefaultKernel.run(s1);
 //
-//     return X$(
-//         X$(r, structure),
+//     return X(
+//         X(r, structure),
 //         numeral
 //     );
 // }
@@ -33,9 +33,9 @@ DefaultKernel.extend(Mr);
 //     const s1 = specr2('r1', specadd(c0, a), b, times, b); // doesn't work because would need to substitute 2 levels down
 //     const r = DefaultKernel.run(s1);
 //
-//     return X$(
-//         X$(
-//             X$(r, structure),
+//     return X(
+//         X(
+//             X(r, structure),
 //             structure
 //         ),
 //         numeral
