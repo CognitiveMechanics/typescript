@@ -1,7 +1,7 @@
 
 import {C, X, T} from "../src/Kernel/DefaultKernel";
 import Debug from "../src/Debug/Debug";
-import {c, eq, gteq, c0, H0, iH0, numeral} from "../src/Numeric/Core";
+import {c, eq, gteq, c0, H0, iH0, num} from "../src/Numeric/Core";
 import Entity from "../src/Entity/Entity";
 
 const seq = C('<>', []);

@@ -25,7 +25,7 @@ DefaultKernel.extend(Mr);
 //
 //     return X(
 //         X(r, structure),
-//         numeral
+//         num
 //     );
 // }
 //
@@ -38,7 +38,7 @@ DefaultKernel.extend(Mr);
 //             X(r, structure),
 //             structure
 //         ),
-//         numeral
+//         num
 //     );
 // }
 

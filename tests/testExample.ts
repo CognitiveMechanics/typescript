@@ -5,7 +5,7 @@ import {Mr, specr1, specr2, structure} from "../src/Repeater/Machine";
 import Kernel from "../src/Kernel/Kernel";
 import Entity from "../src/Entity/Entity";
 import Proxy from "../src/Proxy/Proxy";
-import {c, c1, H0, iH0, not0, numeral} from "../src/Numeric/Core";
+import {c, c1, H0, iH0, not0, num} from "../src/Numeric/Core";
 import Debug from "../src/Debug/Debug";
 
 DefaultKernel.extend(Mr);
@@ -90,7 +90,7 @@ function specex (name : string, o1: Entity, o2: Entity, n: Entity) {
         [
             C('[op1]', [k(op1), o1]),
             C('[op2]', [k(op2), o2]),
-            C('[num]', [k(numeral), n]),
+            C('[num]', [k(num), n]),
         ]
     );
 }
@@ -106,7 +106,7 @@ Mex.state(
                 X(s, op1),
                 X(s, op2)
             ),
-            iH0(X(s, numeral))
+            iH0(X(s, num))
         );
     }
 );

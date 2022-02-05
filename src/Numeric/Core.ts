@@ -8,8 +8,8 @@ declare global {
     var cCache : Record<number, Entity>;
 }
 
-export const numeral = C('numeral', []);
-export const c0 = C('0', [k(numeral), Proxy]);
+export const num = C('num', []);
+export const c0 = C('0', [k(num), Proxy]);
 export const c1 = c(1);
 export const not0 = c1;
 export const anynum = c0;
@@ -33,12 +33,12 @@ export function H0 (n : Entity) {
     if (global.cCache[number]) {
         return global.cCache[number];
     } else {
-        return global.cCache[number] = C(name, [k(numeral), n]);
+        return global.cCache[number] = C(name, [k(num), n]);
     }
 }
 
 export function iH0 (n : Entity) {
-    return X(C('n', [n]), numeral);
+    return X(C('n', [n]), num);
 }
 
 export function gteq (a : Entity, b : Entity) {

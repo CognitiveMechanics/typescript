@@ -15,7 +15,7 @@ export function specc0 (name: string, s: Entity, n: Entity) : Entity
         name,
         [
             C('[state]', [k(state), s]),
-            C('[numeral]', [k(numeral), n]),
+            C('[num]', [k(numeral), n]),
         ]
     );
 }
