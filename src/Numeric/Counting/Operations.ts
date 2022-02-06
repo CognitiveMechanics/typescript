@@ -105,7 +105,7 @@ Mc2.state(
         iH0(X(s, op2)),
         X(
             Mc1.run(
-                specc1('Mc1()', X(s, product), X(s, op1), Proxy)
+                specc1('Mc1()', X(s, op1), X(s, product), Proxy)
             ),
             sum
         )

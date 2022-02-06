@@ -36,7 +36,7 @@ let r1 = DefaultKernel.run(
 
 Debug.logStructure(r1);
 
-export function specAdd (name: string, a: Entity, b: Entity, r: Entity) : Entity
+function specAdd (name: string, a: Entity, b: Entity, r: Entity) : Entity
 {
     return C(
         name,
@@ -48,6 +48,15 @@ export function specAdd (name: string, a: Entity, b: Entity, r: Entity) : Entity
     );
 }
 
+function specopAdd (a : Entity, b : Entity, r : Entity) : Entity
+{
+    return specopC3(
+        specopTag(op1, a),
+        specopTag(op2, b),
+        specopTag(sum, r)
+    )
+}
+
 let r2 = DefaultKernel.run(
     specMU(
         'test-H1c',
@@ -55,26 +64,26 @@ let r2 = DefaultKernel.run(
         specConfigurations([
             {
                 pattern: specAdd('s0a', Proxy, Proxy, DotProxy),
-                instruction: specopC3(
-                    specopTag(op1, Proxy),
-                    specopTag(op2, specRef(op2)),
-                    specopTag(sum, specRef(op1))
+                instruction: specopAdd(
+                    Proxy,
+                    specRef(op2),
+                    specRef(op1)
                 )
             },
             {
                 pattern: specAdd('s1a', DotProxy, not0, Proxy),
-                instruction: specopC3(
-                    specopTag(op1, Proxy),
-                    specopTag(op2, specopiH0(specRef(op2))),
-                    specopTag(sum, specopH0(specRef(sum)))
+                instruction: specopAdd(
+                    Proxy,
+                    specopiH0(specRef(op2)),
+                    specopH0(specRef(sum))
                 )
             },
             {
                 pattern: specAdd('s2a', Proxy, DefaultKernel.dot(c0), Proxy),
-                instruction: specopC3(
-                    specopTag(op1, Proxy),
-                    specopTag(op2, Proxy),
-                    specopTag(sum, specRef(sum))
+                instruction: specopAdd(
+                    Proxy,
+                    Proxy,
+                    specRef(sum)
                 )
             },
         ])
@@ -95,6 +104,15 @@ export function specMult (name: string, a: Entity, b: Entity, r: Entity) : Entit
     );
 }
 
+function specopMult (a : Entity, b : Entity, r : Entity) : Entity
+{
+    return specopC3(
+        specopTag(op1, a),
+        specopTag(op2, b),
+        specopTag(product, r)
+    )
+}
+
 let r3 = DefaultKernel.run(
     specMU(
         'test-H1c',
@@ -102,59 +120,56 @@ let r3 = DefaultKernel.run(
         specConfigurations([
             {
                 pattern: specAdd('s0a', Proxy, Proxy, DotProxy),
-                instruction: specopC3(
-                    specopTag(op1, Proxy),
-                    specopTag(op2, specRef(op2)),
-                    specopTag(sum, specRef(op1))
+                instruction: specopAdd(
+                    Proxy,
+                    specRef(op2),
+                    specRef(op1)
                 )
             },
             {
                 pattern: specAdd('s1a', DotProxy, not0, Proxy),
-                instruction: specopC3(
-                    specopTag(op1, Proxy),
-                    specopTag(op2, specopiH0(specRef(op2))),
-                    specopTag(sum, specopH0(specRef(sum)))
+                instruction: specopAdd(
+                    Proxy,
+                    specopiH0(specRef(op2)),
+                    specopH0(specRef(sum))
                 )
             },
             {
                 pattern: specAdd('s2a', Proxy, DefaultKernel.dot(c0), Proxy),
-                instruction: specopC3(
-                    specopTag(op1, Proxy),
-                    specopTag(op2, Proxy),
-                    specopTag(sum, specRef(sum))
+                instruction: specopAdd(
+                    Proxy,
+                    Proxy,
+                    specRef(sum)
                 )
             },
             {
                 pattern: specMult('s0m', Proxy, Proxy, DotProxy),
-                instruction: specopC3(
-                    specopTag(op1, specRef(op1)),
-                    specopTag(op2, specRef(op2)),
-                    specopTag(product, c0)
+                instruction: specopMult(
+                    specRef(op1),
+                    specRef(op2),
+                    c0
                 )
             },
             {
                 pattern: specMult('s1m', Proxy, not0, Proxy),
-                instruction: specopC3(
-                    specopTag(op1, specRef(op1)),
-                    specopTag(op2, specopiH0(specRef(op2))),
-                    specopTag(
-                        product,
-                        specopX(
-                            specEval(
-                                specopC3(
-                                    specopTag(op1, specRef(op1)),
-                                    specopTag(op2, specRef(product)),
-                                    specopTag(sum, Proxy)
-                                )
-                            ),
-                            sum
-                        )
+                instruction: specopMult(
+                    specRef(op1),
+                    specopiH0(specRef(op2)),
+                    specopX(
+                        specEval(
+                            specopAdd(
+                                specRef(op1),
+                                specRef(product),
+                                Proxy
+                            )
+                        ),
+                        sum
                     )
                 )
             },
             {
                 pattern: specMult('s2m', Proxy, DefaultKernel.dot(c0), Proxy),
-                instruction: specopC3(
+                instruction: specopMult(
                     Proxy,
                     Proxy,
                     specRef(product)
