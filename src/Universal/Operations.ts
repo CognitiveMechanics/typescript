@@ -4,15 +4,22 @@
 import {C, k, X} from "../Kernel/DefaultKernel";
 import Entity from "../Entity/Entity";
 import Proxy from "../Proxy/Proxy";
-import {MU, op, op1, op2, op3, op4, ref, specRef, specUi, evalUi, structure, instruction} from "./Machine";
+import {MU, op, op1, op2, op3, op4, ref, specUi, evalUi, structure, instruction, result, specMU, configurations} from "./Machine";
 import {H0, iH0} from "../Numeric/Core";
+import Debug from "../Debug/Debug";
 
-export const opC = C('opC', []);
-export const opT = C('opT', []);
-export const opX = C('opX', []);
-export const opH0 = C('opH0', []);
-export const opiH0 = C('opiH0', []);
-export const opk = C('opk', []);
+export const opC = C('opC');
+export const opT = C('opT');
+export const opX = C('opX');
+export const opH0 = C('opH0');
+export const opiH0 = C('opiH0');
+export const opk = C('opk');
+export const opEval = C('opEval');
+export const opTag = C('opTag');
+
+export function specRef (a : Entity) {
+    return C('&' + a.name, [k(ref), a]);
+}
 
 export function specopC2 (o1 : Entity, o2 : Entity) {
     return C(
@@ -103,10 +110,24 @@ export function specopk (o1 : Entity) {
     );
 }
 
+export function specEval (i : Entity) {
+    return C(
+        'opEval',
+        [
+            C('[op]', [k(op), opEval]),
+            C('[instruction]', [k(instruction), i]),
+        ]
+    );
+}
+
+export function specopTag (o1 : Entity, o2 : Entity) {
+    return specopC2(specopk(o1), o2);
+}
+
 MU.state(
-    specUi('ref', Proxy, specRef(Proxy))
+    specUi('ref', Proxy, Proxy, specRef(Proxy))
 ).relation((s) => {
-    return specUi('!ref', X(s, structure), X(
+    return specUi('!ref', X(s, structure), X(s, configurations), X(
         X(s, structure),
         X(
             C('', [X(s, instruction)]),
@@ -118,25 +139,29 @@ MU.state(
 let i = 0;
 
 MU.state(
-    specUi('C4', Proxy, specopC4(Proxy, Proxy, Proxy, Proxy))
+    specUi('C4', Proxy, Proxy, specopC4(Proxy, Proxy, Proxy, Proxy))
 ).relation((s) => {
-    return specUi('!C4', X(s, structure), MU.compose(
+    return specUi('!C4', X(s, structure), X(s, configurations), MU.compose(
         'R(C4):' + (i++),
         [
             evalUi(
                 X(s, structure),
+                X(s, configurations),
                 X(X(s, instruction), op1)
             ),
             evalUi(
                 X(s, structure),
+                X(s, configurations),
                 X(X(s, instruction), op2)
             ),
             evalUi(
                 X(s, structure),
+                X(s, configurations),
                 X(X(s, instruction), op3)
             ),
             evalUi(
                 X(s, structure),
+                X(s, configurations),
                 X(X(s, instruction), op4)
             )
         ]
@@ -145,21 +170,24 @@ MU.state(
 
 
 MU.state(
-    specUi('C3', Proxy, specopC3(Proxy, Proxy, Proxy))
+    specUi('C3', Proxy, Proxy, specopC3(Proxy, Proxy, Proxy))
 ).relation((s) => {
-    return specUi('!C3', X(s, structure), MU.compose(
+    return specUi('!C3', X(s, structure), X(s, configurations), MU.compose(
         'R(C3):' + (i++),
         [
             evalUi(
                 X(s, structure),
+                X(s, configurations),
                 X(X(s, instruction), op1)
             ),
             evalUi(
                 X(s, structure),
+                X(s, configurations),
                 X(X(s, instruction), op2)
             ),
             evalUi(
                 X(s, structure),
+                X(s, configurations),
                 X(X(s, instruction), op3)
             )
         ]
@@ -168,17 +196,19 @@ MU.state(
 
 
 MU.state(
-    specUi('C2', Proxy, specopC2(Proxy, Proxy))
+    specUi('C2', Proxy, Proxy, specopC2(Proxy, Proxy))
 ).relation((s) => {
-    return specUi('!C2', X(s, structure), MU.compose(
+    return specUi('!C2', X(s, structure), X(s, configurations), MU.compose(
         'R(C2):' + (i++),
         [
             evalUi(
                 X(s, structure),
+                X(s, configurations),
                 X(X(s, instruction), op1)
             ),
             evalUi(
                 X(s, structure),
+                X(s, configurations),
                 X(X(s, instruction), op2)
             )
         ]
@@ -187,19 +217,22 @@ MU.state(
 
 
 MU.state(
-    specUi('T', Proxy, specopT(Proxy, Proxy, Proxy))
+    specUi('T', Proxy, Proxy, specopT(Proxy, Proxy, Proxy))
 ).relation((s) => {
-    return specUi('!T', X(s, structure), MU.transclude(
+    return specUi('!T', X(s, structure), X(s, configurations), MU.transclude(
         evalUi(
             X(s, structure),
+            X(s, configurations),
             X(X(s, instruction), op1)
         ),
         evalUi(
             X(s, structure),
+            X(s, configurations),
             X(X(s, instruction), op2)
         ),
         evalUi(
             X(s, structure),
+            X(s, configurations),
             X(X(s, instruction), op3)
         )
     ))
@@ -207,15 +240,17 @@ MU.state(
 
 
 MU.state(
-    specUi('X', Proxy, specopX(Proxy, Proxy))
+    specUi('X', Proxy, Proxy, specopX(Proxy, Proxy))
 ).relation((s) => {
-    return specUi('!X', X(s, structure), X(
+    return specUi('!X', X(s, structure), X(s, configurations), X(
         evalUi(
             X(s, structure),
+            X(s, configurations),
             X(X(s, instruction), op1)
         ),
         evalUi(
             X(s, structure),
+            X(s, configurations),
             X(X(s, instruction), op2)
         )
     ));
@@ -223,11 +258,12 @@ MU.state(
 
 
 MU.state(
-    specUi('H0', Proxy, specopH0(Proxy))
+    specUi('H0', Proxy, Proxy, specopH0(Proxy))
 ).relation((s) => {
-    return specUi('!H0', X(s, structure), H0(
+    return specUi('!H0', X(s, structure), X(s, configurations), H0(
         evalUi(
             X(s, structure),
+            X(s, configurations),
             X(X(s, instruction), op1)
         )
     ));
@@ -235,11 +271,12 @@ MU.state(
 
 
 MU.state(
-    specUi('iH0', Proxy, specopiH0(Proxy))
+    specUi('iH0', Proxy, Proxy, specopiH0(Proxy))
 ).relation((s) => {
-    return specUi('!iH0', X(s, structure), iH0(
+    return specUi('!iH0', X(s, structure), X(s, configurations), iH0(
         evalUi(
             X(s, structure),
+            X(s, configurations),
             X(X(s, instruction), op1)
         )
     ));
@@ -247,12 +284,35 @@ MU.state(
 
 
 MU.state(
-    specUi('k', Proxy, specopk(Proxy))
+    specUi('k', Proxy, Proxy, specopk(Proxy))
 ).relation((s) => {
-    return specUi('!k', X(s, structure), k(
+    return specUi('!k', X(s, structure), X(s, configurations), k(
         evalUi(
             X(s, structure),
+            X(s, configurations),
             X(X(s, instruction), op1)
         )
     ));
+});
+
+
+MU.state(
+    specUi('eval', Proxy, Proxy, specEval(Proxy))
+).relation((s) => {
+    return specUi(
+        '!eval',
+        X(s, structure),
+        X(s, configurations),
+        X(MU.run(
+            specMU(
+                '!MU',
+                evalUi(
+                    X(s, structure),
+                    X(s, configurations),
+                    X(X(s, instruction), instruction)
+                ),
+                X(s, configurations)
+            )
+        ), result)
+    );
 });

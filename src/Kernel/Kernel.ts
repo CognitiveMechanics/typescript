@@ -169,7 +169,8 @@ export default class Kernel implements IKernel
         if (def instanceof Entity) {
             return def as Entity;
         } else {
-            throw new Error('Invalid extracttion');
+            console.log(entity, tag);
+            throw new Error('Invalid extraction');
         }
     }
 

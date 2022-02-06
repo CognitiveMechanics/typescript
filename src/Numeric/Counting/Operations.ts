@@ -2,7 +2,7 @@ import Kernel from "../../Kernel/Kernel";
 import {begin, end, Mc0, numeral, state} from "./Machine";
 import {Mr} from "../../Repeater/Machine";
 import Entity from "../../Entity/Entity";
-import {C, DefaultKernel, k, X} from "../../Kernel/DefaultKernel";
+import {C, DefaultKernel, k, tag, X} from "../../Kernel/DefaultKernel";
 import Proxy from "../../Proxy/Proxy";
 import {c0, c1, H0, iH0, not0} from "../Core";
 import dotProxy from "../../Proxy/DotProxy";
@@ -15,66 +15,72 @@ export const [operands, [op1, op2, sum, product, power, diff]] = Mc0.label('oper
 
 export const Mc1 = new Kernel;
 
-Mc1.extend(Mr);
-Mc1.extend(Mc0);
-
 export function specc1 (name: string, a: Entity, b: Entity, r: Entity) : Entity
 {
     return C(
         name,
         [
-            C('[op1]', [k(op1), a]),
-            C('[op2]', [k(op2), b]),
-            C('[sum]', [k(sum), r]),
+            tag(op1, a),
+            tag(op2, b),
+            tag(sum, r),
         ]
     );
 }
 
 Mc1.state(
-    specc1('sc10', not0, Proxy, Proxy)
+    specc1('sc10', Proxy, Proxy, DotProxy)
 ).relation((s : Entity) => {
     return specc1(
-        'R(sc00)',
-        iH0(X(s, op1)),
-        H0(X(s, op2)),
-        Proxy
+        'R(sc10)',
+        Proxy,
+        X(s, op2),
+        X(s, op1)
     );
 });
 
 Mc1.state(
-    specc1('sc11', Mc1.dot(c0), Proxy, Proxy)
+    specc1('sc11', DotProxy, not0, Proxy)
 ).relation((s : Entity) => {
     return specc1(
-        'R(sc00)',
+        'R(sc11)',
         Proxy,
-        Proxy,
-        X(s, op2)
+        iH0(X(s, op2)),
+        H0(X(s, sum))
     );
 });
 
-export function add (a : Entity, b : Entity) {
-    const r = Mc1.run(
-        specc1('add()', a, b, Proxy)
+Mc1.state(
+    specc1('sc12', DotProxy, Mc1.dot(c0), Proxy)
+).relation((s : Entity) => {
+    return specc1(
+        'R(sc12)',
+        Proxy,
+        Proxy,
+        X(s, sum)
     );
+});
 
-    return X(r, sum);
+export function H1c (a : Entity, b : Entity) {
+    return X(
+        Mc1.run(
+            specc1('H1c()', a, b, Proxy)
+        ),
+        sum
+    );
 }
 
 // MULTIPLICATION
 
 export const Mc2 = new Kernel;
 
-Mc2.extend(Mr);
-Mc2.extend(Mc0);
-
 export function specc2 (name: string, a: Entity, b: Entity, r: Entity) : Entity
 {
     return C(
         name,
         [
-            C('[op1]', [k(op1), a]),
-            C('[op2]', [k(op2), b]),
-            C('[product]', [k(product), r]),
+            tag(op1, a),
+            tag(op2, b),
+            tag(product, r),
         ]
     );
 }
@@ -91,22 +97,23 @@ Mc2.state(
 });
 
 Mc2.state(
-    specc2('sc21', not0, Proxy, Proxy)
+    specc2('sc21', Proxy, not0, Proxy)
 ).relation((s : Entity) => {
-    const r = Mc1.run(
-        specc1('Mc1()', X(s, product), X(s, op2), Proxy)
-    );
-
     return specc2(
         'R(sc21)',
-        iH0(X(s, op1)),
-        X(s, op2),
-        X(r, sum)
+        X(s, op1),
+        iH0(X(s, op2)),
+        X(
+            Mc1.run(
+                specc1('Mc1()', X(s, product), X(s, op1), Proxy)
+            ),
+            sum
+        )
     );
 });
 
 Mc2.state(
-    specc2('sc22', Mc1.dot(c0), Proxy, Proxy)
+    specc2('sc22', Proxy, Mc1.dot(c0), Proxy)
 ).relation((s : Entity) => {
     return specc2(
         'R(sc22)',
@@ -116,12 +123,13 @@ Mc2.state(
     );
 });
 
-export function mult (a : Entity, b : Entity) {
-    const r = Mc2.run(
-        specc2('mult()', a, b, Proxy)
+export function H2c (a : Entity, b : Entity) {
+    return X(
+        Mc2.run(
+            specc2('H2c()', a, b, Proxy)
+        ),
+        product
     );
-
-    return X(r, product);
 }
 
 // EXPONENTIATION
@@ -138,7 +146,7 @@ export function specc3 (name: string, a: Entity, b: Entity, r: Entity) : Entity
         [
             C('[op1]', [k(op1), a]),
             C('[op2]', [k(op2), b]),
-            C('[exp]', [k(power), r]),
+            C('[H3c]', [k(power), r]),
         ]
     );
 }
@@ -180,9 +188,9 @@ Mc3.state(
     );
 });
 
-export function exp (a : Entity, b : Entity) {
+export function H3c (a : Entity, b : Entity) {
     const r = Mc3.run(
-        specc3('exp()', a, b, Proxy)
+        specc3('H3c()', a, b, Proxy)
     );
 
     return X(r, power);
@@ -238,9 +246,9 @@ Mic1.state(
     );
 });
 
-export function sub (a : Entity, b : Entity) {
+export function iH1c (a : Entity, b : Entity) {
     const r = Mic1.run(
-        specic1('sub()', a, b, Proxy)
+        specic1('iH1c()', a, b, Proxy)
     );
 
     if (X(r, op2) != Proxy) {

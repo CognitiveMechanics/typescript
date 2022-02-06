@@ -1,5 +1,5 @@
 import Kernel from "../Kernel/Kernel";
-import {C, k, X, Y, T} from "../Kernel/DefaultKernel";
+import {C, k, X, Y, T, tag} from "../Kernel/DefaultKernel";
 import Entity from "../Entity/Entity";
 import Proxy from "../Proxy/Proxy";
 import DotProxy from "../Proxy/DotProxy";
@@ -34,23 +34,24 @@ export function specU (name: string, s : Entity, c : Entity, i : Entity, n : Ent
     return C(
         name,
         [
-            C('[structure]', [k(structure), s]),
-            C('[configurations]', [k(configurations), c]),
-            C('[index]',[k(index), i]),
-            C('[next]', [k(next), n]),
-            C('[pattern]', [k(pattern), p]),
-            C('[instruction]', [k(instruction), j]),
-            C('[result]', [k(result), r]),
+            tag(structure, s),
+            tag(configurations, c),
+            tag(index, i),
+            tag(next, n),
+            tag(pattern, p),
+            tag(instruction, j),
+            tag(result, r),
         ]
     );
 }
 
-export function specUi (name: string, s : Entity, j : Entity) : Entity
+export function specUi (name: string, s : Entity, c : Entity, j : Entity) : Entity
 {
     return C(
         name,
         [
             C('[structure]', [k(structure), s]),
+            C('[configurations]', [k(configurations), c]),
             C('[instruction]', [k(instruction), j]),
         ]
     );
@@ -73,12 +74,8 @@ export function specConfigurations (cs : Array<Record<string, any>>)
     return configs;
 }
 
-export function specRef (a : Entity) {
-    return C('&' + a.name, [k(ref), a]);
-}
-
-export function evalUi (s : Entity, i : Entity) {
-    return X(MU.run(specUi('eval', s, i)), instruction);
+export function evalUi (s : Entity, c : Entity, i : Entity) {
+    return X(MU.run(specUi('eval', s, c, i)), instruction);
 }
 
 // init — set index to zero and next to first configuration
@@ -107,6 +104,7 @@ MU.state(
         'R(sU1)',
         evalUi(
             X(s, structure),
+            X(s, configurations),
             X(s, instruction)
         ),
         X(s, configurations),
