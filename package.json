@@ -1,7 +1,7 @@
 {
   "name": "cognitive-mechanics",
   "version": "1.0.0",
-  "description": "A JavaScrript implementation of the Cognitive Mechanics framework",
+  "description": "A TypeScript implementation of the framework outlinedin the book Cognitive Mechanics",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -17,5 +17,17 @@
     "ts-node": "^10.4.0",
     "tslib": "^2.3.1",
     "typescript": "^4.5.3"
-  }
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CognitiveMechanics/typescript.git"
+  },
+  "bugs": {
+    "url": "https://github.com/CognitiveMechanics/typescript/issues"
+  },
+  "homepage": "https://github.com/CognitiveMechanics/typescript#readme"
 }
