@@ -136,9 +136,6 @@ export function H2c (a : Entity, b : Entity) {
 
 export const Mc3 = new Kernel;
 
-Mc3.extend(Mr);
-Mc3.extend(Mc0);
-
 export function specc3 (name: string, a: Entity, b: Entity, r: Entity) : Entity
 {
     return C(

@@ -1,9 +1,9 @@
 
-import {MU, op1, op2, op3, specMU, specConfigurations} from '../src/Universal/Machine';
-import {C, O, DefaultKernel, k, Y, tag} from "../src/Kernel/DefaultKernel";
+import {MU, specMU, specConfigurations} from '../src/Universal/Machine';
+import {C, O, DefaultKernel, tag} from "../src/Kernel/DefaultKernel";
 import Proxy from "../src/Proxy/Proxy";
 import Debug from "../src/Debug/Debug";
-import {specEval, specRef, specopC2, specopC3, specopC4, specopH0, specopiH0, specopk, specopTag, specopX} from "../src/Universal/Operations";
+import {specEval, specRef, specopC2, specopC3, specopH0, specopiH0, specopTag, specopX,  op1, op2} from "../src/Universal/Operations";
 import {c, c0, c1, not0} from "../src/Numeric/Core";
 import Entity from "../src/Entity/Entity";
 import DotProxy from "../src/Proxy/DotProxy";

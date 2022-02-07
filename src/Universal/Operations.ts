@@ -4,7 +4,7 @@
 import {C, k, X} from "../Kernel/DefaultKernel";
 import Entity from "../Entity/Entity";
 import Proxy from "../Proxy/Proxy";
-import {MU, op, op1, op2, op3, op4, ref, specUi, evalUi, structure, instruction, result, specMU, configurations} from "./Machine";
+import {MU, specUi, evalUi, structure, instruction, result, specMU, configurations} from "./Machine";
 import {H0, iH0} from "../Numeric/Core";
 import Debug from "../Debug/Debug";
 
@@ -16,6 +16,14 @@ export const opiH0 = C('opiH0');
 export const opk = C('opk');
 export const opEval = C('opEval');
 export const opTag = C('opTag');
+
+export const ref = C('ref', []);
+
+export const op = C('Uop', []);
+export const op1 = C('Uop1', []);
+export const op2 = C('Uop2', []);
+export const op3 = C('Uop3', []);
+export const op4 = C('Uop4', []);
 
 export function specRef (a : Entity) {
     return C('&' + a.name, [k(ref), a]);

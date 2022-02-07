@@ -13,23 +13,14 @@ export const structure = C('structure', []);
 export const configurations = C('configurations', []);
 export const index = C('index', []);
 export const next = C('next', []);
+export const matched = C('matched', []);
 export const pattern = C('pattern', []);
 export const instruction = C('instruction', []);
 export const result = C('result', []);
 
-export const ref = C('ref', []);
-
-export const op = C('Uop', []);
-export const op1 = C('Uop1', []);
-export const op2 = C('Uop2', []);
-export const op3 = C('Uop3', []);
-export const op4 = C('Uop4', []);
-
-export function specMU (name: string, s : Entity, c : Entity) {
-    return specU(name, s, c, Proxy, Proxy, Proxy, Proxy, Proxy);
-}
-
-export function specU (name: string, s : Entity, c : Entity, i : Entity, n : Entity, p : Entity, j : Entity, r : Entity) : Entity
+export function specU (name: string, s : Entity, c : Entity, i : Entity,
+                n : Entity, m : Entity, j : Entity, r : Entity)
+    : Entity
 {
     return C(
         name,
@@ -38,11 +29,15 @@ export function specU (name: string, s : Entity, c : Entity, i : Entity, n : Ent
             tag(configurations, c),
             tag(index, i),
             tag(next, n),
-            tag(pattern, p),
+            tag(matched, m),
             tag(instruction, j),
             tag(result, r),
         ]
     );
+}
+
+export function specMU (name: string, s : Entity, c : Entity) {
+    return specU(name, s, c, Proxy, Proxy, Proxy, Proxy, Proxy);
 }
 
 export function specUi (name: string, s : Entity, c : Entity, j : Entity) : Entity
