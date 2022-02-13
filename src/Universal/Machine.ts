@@ -9,14 +9,14 @@ import TrueEntity from "../Entity/TrueEntity";
 
 export const MU = new Kernel;
 
-export const structure = C('structure', []);
-export const configurations = C('configurations', []);
-export const index = C('index', []);
-export const next = C('next', []);
-export const matched = C('matched', []);
-export const pattern = C('pattern', []);
-export const instruction = C('instruction', []);
-export const result = C('result', []);
+export const structure = C('structure');
+export const configurations = C('configurations');
+export const index = C('index');
+export const next = C('next');
+export const matched = C('matched');
+export const pattern = C('pattern');
+export const instruction = C('instruction');
+export const result = C('result');
 
 export function specU (name: string, s : Entity, c : Entity, i : Entity,
                 n : Entity, m : Entity, j : Entity, r : Entity)
@@ -40,14 +40,14 @@ export function specMU (name: string, s : Entity, c : Entity) {
     return specU(name, s, c, Proxy, Proxy, Proxy, Proxy, Proxy);
 }
 
-export function specUi (name: string, s : Entity, c : Entity, j : Entity) : Entity
+export function specUi (name: string, s : Entity, c : Entity, j : Entity)
 {
     return C(
         name,
         [
-            C('[structure]', [k(structure), s]),
-            C('[configurations]', [k(configurations), c]),
-            C('[instruction]', [k(instruction), j]),
+            tag(structure, s),
+            tag(configurations, c),
+            tag(instruction, j),
         ]
     );
 }

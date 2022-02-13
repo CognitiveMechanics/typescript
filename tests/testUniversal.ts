@@ -1,6 +1,6 @@
 
-import {MU, specMU, specConfigurations} from '../src/Universal/Machine';
-import {C, O, DefaultKernel, tag} from "../src/Kernel/DefaultKernel";
+import {MU, specMU, specConfigurations, result} from '../src/Universal/Machine';
+import {C, O, DefaultKernel, tag, X} from "../src/Kernel/DefaultKernel";
 import Proxy from "../src/Proxy/Proxy";
 import Debug from "../src/Debug/Debug";
 import {specEval, specRef, specopC2, specopC3, specopH0, specopiH0, specopTag, specopX,  op1, op2} from "../src/Universal/Operations";
@@ -10,12 +10,12 @@ import DotProxy from "../src/Proxy/DotProxy";
 
 DefaultKernel.extend(MU);
 
-let Xa = C('a');
-let Xb = C('b');
-let Xc = C('c');
+const Xa = C('a');
+const Xb = C('b');
+const Xc = C('c');
 
-let sum = C('sum');
-let product = C('product');
+const sum = C('sum');
+const product = C('product');
 
 let r1 = DefaultKernel.run(
     specMU(
@@ -180,3 +180,5 @@ let r3 = DefaultKernel.run(
 );
 
 Debug.logStructure(r3);
+
+console.log(X(X(r3, result), product));
