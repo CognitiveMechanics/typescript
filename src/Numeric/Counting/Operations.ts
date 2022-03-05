@@ -2,14 +2,14 @@ import Kernel from "../../Kernel/Kernel";
 import {begin, end, Mc0, numeral, state} from "./Machine";
 import {Mr} from "../../Repeater/Machine";
 import Entity from "../../Entity/Entity";
-import {C, DefaultKernel, k, tag, X} from "../../Kernel/DefaultKernel";
+import {C, DefaultKernel, dot, k, tag, X} from "../../Kernel/DefaultKernel";
 import Proxy from "../../Proxy/Proxy";
 import {c0, c1, H0, iH0, not0} from "../Core";
 import dotProxy from "../../Proxy/DotProxy";
 import DotProxy from "../../Proxy/DotProxy";
 import Debug from "../../Debug/Debug";
 
-export const [operands, [op1, op2, sum, product, power, diff]] = Mc0.label('operands', ['op1', 'op2', 'sum', 'product', 'power', 'diff']);
+export const [operands, [op1, op2, sum, product, power, diff, result4]] = Mc0.label('operands', ['op1', 'op2', 'sum', 'product', 'power', 'diff', 'result4']);
 
 // ADDITION
 
@@ -149,7 +149,7 @@ export function specc3 (name: string, a: Entity, b: Entity, r: Entity) : Entity
 }
 
 Mc3.state(
-    specc3('sc30', Proxy, Proxy, dotProxy)
+    specc3('sc30', Proxy, Proxy, DotProxy)
 ).relation((s : Entity) => {
     return specc3(
         'R(sc30)',
@@ -193,8 +193,79 @@ export function H3c (a : Entity, b : Entity) {
     return X(r, power);
 }
 
-// SUBTRACTION
+// TETRATION
 
+export const Mc4 = new Kernel;
+
+export function specc4 (name: string, a: Entity, b: Entity, r: Entity) : Entity
+{
+    return C(
+        name,
+        [
+            C('[op1]', [k(op1), a]),
+            C('[op2]', [k(op2), b]),
+            C('[H4c]', [k(result4), r]),
+        ]
+    );
+}
+
+Mc4.state(
+    specc4('sc40', Proxy, dot(c0), DotProxy)
+).relation((s : Entity) => {
+    return specc4(
+        'R(sc40)',
+        Proxy,
+        Proxy,
+        c1
+    );
+});
+
+Mc4.state(
+    specc4('sc41', Proxy, not0, DotProxy)
+).relation((s : Entity) => {
+    return specc4(
+        'R(sc41)',
+        X(s, op1),
+       iH0(X(s, op2)),
+        X(s, op1)
+    );
+});
+
+Mc4.state(
+    specc4('sc42', Proxy, not0, Proxy)
+).relation((s : Entity) => {
+    const r = Mc3.run(
+        specc3('Mc3()', X(s, op1), X(s, result4), Proxy)
+    );
+
+    return specc4(
+        'R(sc42)',
+        X(s, op1),
+        iH0(X(s, op2)),
+        X(r, power)
+    );
+});
+
+Mc4.state(
+    specc4('sc43', Proxy, Mc1.dot(c0), Proxy)
+).relation((s : Entity) => {
+    return specc4(
+        'R(sc43)',
+        Proxy,
+        Proxy,
+        X(s, result4)
+    );
+});
+
+export function H4c (a : Entity, b : Entity) {
+    const r = Mc4.run(
+        specc4('H4c()', a, b, Proxy)
+    );
+
+    return X(r, result4);
+}
+
+// SUBTRACTION
 
 export const Mic1 = new Kernel;
 
