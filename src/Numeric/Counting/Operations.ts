@@ -160,14 +160,14 @@ Mc3.state(
 });
 
 Mc3.state(
-    specc3('sc31', Proxy, not0, Proxy)
+    specc3('sc32', Proxy, not0, Proxy)
 ).relation((s : Entity) => {
     const r = Mc2.run(
-        specc2('Mc2()', X(s, power), X(s, op1), Proxy)
+        specc2('Mc2()', X(s, op1), X(s, power), Proxy)
     );
 
     return specc3(
-        'R(sc31)',
+        'R(sc32)',
         X(s, op1),
         iH0(X(s, op2)),
         X(r, product)
@@ -175,10 +175,10 @@ Mc3.state(
 });
 
 Mc3.state(
-    specc3('sc32', Proxy, Mc1.dot(c0), Proxy)
+    specc3('sc33', Proxy, Mc1.dot(c0), Proxy)
 ).relation((s : Entity) => {
     return specc3(
-        'R(sc32)',
+        'R(sc33)',
         Proxy,
         Proxy,
         X(s, power)
@@ -210,24 +210,13 @@ export function specc4 (name: string, a: Entity, b: Entity, r: Entity) : Entity
 }
 
 Mc4.state(
-    specc4('sc40', Proxy, dot(c0), DotProxy)
+    specc4('sc40', Proxy, Proxy, DotProxy)
 ).relation((s : Entity) => {
     return specc4(
         'R(sc40)',
-        Proxy,
-        Proxy,
-        c1
-    );
-});
-
-Mc4.state(
-    specc4('sc41', Proxy, not0, DotProxy)
-).relation((s : Entity) => {
-    return specc4(
-        'R(sc41)',
         X(s, op1),
-       iH0(X(s, op2)),
-        X(s, op1)
+        X(s, op2),
+        c1
     );
 });
 
