@@ -5,8 +5,9 @@ import {C, k, X, tag} from "../Kernel/DefaultKernel";
 import Entity from "../Entity/Entity";
 import Proxy from "../Proxy/Proxy";
 import {MU, specUi, evalUi, structure, instruction, result, specMU, configurations} from "./Machine";
-import {H0, iH0} from "../Numeric/Core";
+import {c, H0, iH0} from "../Numeric/Core";
 import Debug from "../Debug/Debug";
+import NullEntity from "../Entity/NullEntity";
 
 export const op = C('Uop');
 export const op1 = C('Uop1');
@@ -331,16 +332,8 @@ export function specEval (i : Entity) {
 MU.state(
     specUi('eval', Proxy, Proxy, specEval(Proxy))
 ).relation((s) => {
-    console.log('STRUCTURE');
+    console.log("EVAL");
     Debug.logStructure(X(s, structure));
-    // console.log('INSTR');
-    // Debug.logStructure(X(X(s, instruction), instruction));
-    console.log('EVAL');
-    Debug.logStructure(evalUi(
-        X(s, structure),
-        X(s, configurations),
-        X(X(s, instruction), instruction)
-    ));
 
     return specUi(
         '!eval',

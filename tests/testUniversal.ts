@@ -435,7 +435,7 @@ MHx.state(
 DefaultKernel.extend(MHx);
 
 let r4 = DefaultKernel.run(
-    specHx('R(test)', c(3), c(2), c(4), Proxy, Proxy, Proxy, Proxy)
+    specHx('R(test)', c(2), c(3), c(5), Proxy, Proxy, Proxy, Proxy)
 );
 
-Debug.logStructure(r4);
+console.log(X(X(r4, result), c(5)));

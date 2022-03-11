@@ -6,9 +6,19 @@ export default class Debug {
 
     static structure (entity : Entity, state : Record<string, any> = {}) {
         state[entity.name] = {};
+        let isNum = false;
 
         for (let component of entity.components) {
-            Debug.structure(component, state[entity.name]);
+            if (component.name == '#num') {
+                isNum = true;
+                break;
+            }
+        }
+
+        if (! isNum) {
+            for (let component of entity.components) {
+                Debug.structure(component, state[entity.name]);
+            }
         }
 
         return state;
