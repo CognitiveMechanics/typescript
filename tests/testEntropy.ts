@@ -13,6 +13,7 @@ const e = C('e', [b, a]);
 const f = C('f', [a, c]);
 const g = C('g', [a]);
 const h = C('h', [f, d]);
+const i = C('i', [f, d, g]);
 
 // console.log(flattenEntity(f));
 // console.log(stringEntity(d));
@@ -20,10 +21,10 @@ const h = C('h', [f, d]);
 // console.log(stringEntity(f));
 // console.log(stringEntity(h));
 console.log('str');
-Debug.logDeep(stringEntity(h));
+Debug.logDeep(stringEntity(i));
 console.log('sol');
-Debug.logDeep(permute(h));
-for (let t of permute(h)) {
+// Debug.logDeep(permute(i));
+for (let t of permute(i)) {
     console.log(stringEntity(t));
 }
 

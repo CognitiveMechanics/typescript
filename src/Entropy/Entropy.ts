@@ -207,38 +207,6 @@ export function stringEntity (a : Entity) : string {
     return JSON.stringify(inner(a));
 }
 
-// export function permute (entity : Entity) : Array<Entity> {
-//     function inner (a : Entity) : Array<any> {
-//         // Debug.logDeep(E(a).map(b => inner(b).reduce((a, c) => a.concat(c))))
-//         let r = E(a);
-//
-//         console.log('r');
-//         Debug.logDeep(r);
-//
-//         let i = r.map(b => (b.isPrime() ? [b] : inner(b)))
-//
-//         console.log('i');
-//         Debug.logDeep(i);
-//
-//         let powersets = i.map(c => {
-//             return powerset(c)
-//         })
-//
-//         console.log('powersets')
-//         Debug.logDeep(powersets);
-//
-//         let z = p(powersets);
-//
-//         console.log('z');
-//         Debug.logDeep(z);
-//
-//         return z;
-//     }
-//
-//     return uniqueEntities(filterEmptyArrays(inner(entity)));
-// }
-
-
 export function permute (entity : Entity) : Array<Entity> {
     function inner (a : Entity) : Array<any> {
         if (a.isPrime()) {
@@ -253,9 +221,18 @@ export function permute (entity : Entity) : Array<Entity> {
     }
 
     let result = filterEmptyArrays(inner(entity));
+    let final : Array<any>= result;
 
-    return uniqueEntities(result);
+    for (let r of result) {
+        while (Array.isArray(r) && r.length == 1) {
+            r = r[0];
+            final.push(r);
+        }
+    }
+
+    return uniqueEntities(final);
 }
+
 
 function uniqueEntities (A : Array<any>) : Array<Entity> {
     let result : Array<Entity> = [];
