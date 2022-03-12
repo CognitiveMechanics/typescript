@@ -1,8 +1,6 @@
 
 import Entity from "../Entity/Entity";
 import {E} from "../Kernel/DefaultKernel";
-import NullEntity from "../Entity/NullEntity";
-import Debug from "../Debug/Debug";
 
 export type Permutation = Entity;
 
@@ -126,14 +124,14 @@ export function YstarBpermutations (entities : Array<Entity>, permutationSet : P
     return entropy == 0 ? 0 : -entropy;
 }
 
-export function Q(a : Entity, A : Array<Entity>) : number {
+export function Q(A : Array<Entity>, a : Entity) : number {
     const permutationSet = permutations(a);
 
-    return Qpermutations(permutationSet, A);
+    return Qpermutations(A, permutationSet);
 }
 
-export function Qpermutations(permutationSet : PermutationSet, A : Array<Entity>) : number {
-    const Yavg = YstarBpermutations(A,permutationSet) / A.length;
+export function Qpermutations(A : Array<Entity>, permutationSet : PermutationSet) : number {
+    const Yavg = YstarBpermutations(A,permutationSet) / (permutationSet.count() * A.length);
 
     return (permutationSet.count() / setpermutations(A).count()) * (1 - Yavg);
 }
@@ -145,22 +143,45 @@ function powerset (arr : Array<any>) : Array<any> {
     );
 }
 
-export function abstract (entities : Array<Entity>) : Array<Entity> {
-    let maxQ = 0;
-    let best : Array<Entity> = [];
+type Abstraction = {
+    entity : Entity,
+    score : number,
+    inEvery: boolean
+};
+
+export function abstract (entities : Array<Entity>, max : number = 1) : Array<Abstraction> {
+    let abstractions : Array<Abstraction> = [];
 
     for (let p of setpermutations(entities).get()) {
-        const score = Qpermutations(permutations(p), entities);
+        let inEvery = true;
 
-        if (score > maxQ) {
-            maxQ = score;
-            best = [p];
-        } else if (score === maxQ) {
-            best.push(p);
+        for (let e of entities) {
+            if (! permutations(e).contains(p)) {
+                inEvery = false;
+                break;
+            }
         }
+
+        const score = Qpermutations(entities, permutations(p));
+
+        abstractions.push({
+            entity: p,
+            score,
+            inEvery
+        });
     }
 
-    return best;
+    return abstractions
+        .sort((a, b) => {
+            if (a.inEvery === true && b.inEvery === false) {
+                return -1;
+            } else if (a.inEvery === false && b.inEvery === true) {
+                return 1;
+            } else {
+                return (a.score < b.score) ? 1 : -1;
+            }
+        })
+        .splice(0, max);
 }
 
 export function flattenEntity (a : Entity) : Entity|Array<any> {
@@ -181,6 +202,10 @@ export function stringEntity (a : Entity) : string {
     }
 
     return JSON.stringify(inner(a));
+}
+
+export function compareStructure (a : Entity, b : Entity) {
+    return stringEntity(a) === stringEntity(b);
 }
 
 export function permute (entity : Entity) : Array<Entity> {
@@ -295,11 +320,3 @@ function arrayToEntity (a : Array<any>) : Entity {
 
     return new Entity('+', c);
 }
-
-// Debug.logDeep(p([
-//     [0,1],
-//     [2,3],
-//     [4,5],
-//     [6,7],
-//     [8,9],
-// ]))

@@ -24,23 +24,35 @@ console.log(stringEntity(h));
 console.log('Ystar');
 
 console.log('0', Ystar([d, e]));
-console.log('2', Ystar([d, f]));
-console.log('2', Ystar([e, f]));
-console.log('<2', Ystar([d, e, f]));
-console.log('1', Ystar([d, g]));
+console.log('6', Ystar([d, f]));
+console.log('6', Ystar([e, f]));
+console.log('<6', Ystar([d, e, f]));
+console.log('3', Ystar([d, g]));
 
 console.log('YstarB');
 
 console.log('0', YstarB([d], e));
-console.log('1', YstarB([d], f));
+console.log('3', YstarB([d], f));
 console.log('0', YstarB([d], g));
-console.log('1', YstarB([g], d));
+console.log('3', YstarB([g], d));
 
 console.log('Q');
 
-console.log('1', Q(e, [d, e]));
-console.log('1', Q(d, [d, e, a]));
-console.log('.5', Q(g, [d, e]));
+console.log('1', Q([d, e], e));
+console.log('1', Q([d, e, a], d));
+console.log('.5', Q([d, e], g));
 
-console.log(require('util').inspect(abstract([d, e]), {showHidden: false, depth: 3}));
-console.log(require('util').inspect(abstract([d, e, f]), {showHidden: false, depth: 3}));
+console.log('abstract([d,e])');
+Debug.logDeep(abstract([d, e]).map(x => stringEntity(x.entity)));
+
+console.log('abstract([d,f])');
+Debug.logDeep(abstract([d, f]).map(x => stringEntity(x.entity)));
+
+console.log('abstract([d,e,f])');
+Debug.logDeep(abstract([d, e, f]).map(x => stringEntity(x.entity)));
+
+console.log('abstract([d,e,h])');
+Debug.logDeep(abstract([d, e, h]).map(x => stringEntity(x.entity)));
+
+console.log('abstract([d,f,h])');
+Debug.logDeep(abstract([d, f, h]).map(x => stringEntity(x.entity)));
