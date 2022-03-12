@@ -39,4 +39,9 @@ export default class Entity
 			]
 		);
 	}
+
+
+	public isPrime () {
+		return this.components.length === 0;
+	}
 }
