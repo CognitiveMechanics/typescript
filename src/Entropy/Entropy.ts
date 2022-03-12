@@ -4,30 +4,28 @@ import {E} from "../Kernel/DefaultKernel";
 import NullEntity from "../Entity/NullEntity";
 import Debug from "../Debug/Debug";
 
-export type Pair = {
-    parent : string,
-    child : string
-};
+export type Permutation = Entity;
 
-export class PairSet {
-    pairs : Array<Pair>;
+export class PermutationSet {
+    permutations : Array<Permutation> = [];
 
-    constructor(pairs : Array<Pair> = []) {
-        this.pairs = pairs;
-    }
-
-    add (pair : Pair) {
-        if (! this.contains(pair)) {
-            this.pairs.push(pair);
-            return true;
+    constructor(permutations : Array<Permutation> = []) {
+        for (let p of permutations) {
+            this.add(p);
         }
-
-        return false;
     }
 
-    contains (pair : Pair) {
-        for (let p of this.pairs) {
-            if (p.parent === pair.parent && p.child === pair.child) {
+    add (permutation : Permutation) {
+        if (! this.contains(permutation)) {
+            this.permutations.push(permutation);
+        }
+    }
+
+    contains (permutation : Permutation) {
+        let key = stringEntity(permutation);
+
+        for (let p of this.permutations) {
+            if (key === stringEntity(p)) {
                 return true;
             }
         }
@@ -35,52 +33,33 @@ export class PairSet {
         return false;
     }
 
-    merge (set: PairSet) {
-        for (let pair of set.get()) {
-            this.add(pair);
+    merge (set: PermutationSet) {
+        let perms = set.get();
+
+        for (let k in perms) {
+            this.add(perms[k]);
         }
     }
 
     get () {
-        return this.pairs;
+        return this.permutations;
     }
 
     count () {
-        return this.pairs.length;
+        return this.permutations.length;
     }
 }
 
-export function pairs (entity : Entity, root = true) : PairSet {
-    const set = new PairSet();
 
-    for (let e of E(entity)) {
-        if (root) {
-            set.add({
-                parent: '[root]',
-                child: e.name
-            });
-        } else {
-            set.add({
-                parent: entity.name,
-                child: e.name
-            });
-        }
-
-        if (e.components.length) {
-            set.merge(
-                pairs(e, false)
-            );
-        }
-    }
-
-    return set;
+export function permutations (entity : Entity) : PermutationSet {
+    return new PermutationSet(permute(entity) as Array<Permutation>);
 }
 
-export function setpairs (entities : Array<Entity>) : PairSet {
-    let set = new PairSet();
+export function setpermutations (entities : Array<Entity>) : PermutationSet {
+    let set = new PermutationSet();
 
     for (let e of entities) {
-        set.merge(pairs(e));
+        set.merge(permutations(e));
     }
 
     return set;
@@ -89,25 +68,25 @@ export function setpairs (entities : Array<Entity>) : PairSet {
 const avg = (array : Array<number>) => array.reduce((a, b) => a + b) / array.length;
 
 export function Ystar (entities : Array<Entity>) {
-    const pairSet = setpairs(entities);
+    const permutationSet = setpermutations(entities);
     const values : Array<number> = [];
     let entropy = 0;
 
-    for (let pair of pairSet.get()) {
-        let pairValues : Array<number> = [];
+    for (let permutation of permutationSet.get()) {
+        let permutationValues : Array<number> = [];
 
         for (let entity of entities) {
-            const entityPairs = pairs(entity);
+            const entityPermutations = permutations(entity);
 
-            if (entityPairs.contains(pair)) {
-                pairValues.push(1);
+            if (entityPermutations.contains(permutation)) {
+                permutationValues.push(1);
             } else {
-                pairValues.push(0);
+                permutationValues.push(0);
             }
         }
 
         values.push(
-            avg(pairValues)
+            avg(permutationValues)
         );
     }
 
@@ -127,19 +106,19 @@ export function Ystar (entities : Array<Entity>) {
 }
 
 export function YstarB (entities : Array<Entity>, base : Entity) {
-    const pairSet = pairs(base);
+    const permutationSet = permutations(base);
 
-    return YstarBpairs(entities, pairSet);
+    return YstarBpermutations(entities, permutationSet);
 }
 
-export function YstarBpairs (entities : Array<Entity>, pairSet : PairSet) {
+export function YstarBpermutations (entities : Array<Entity>, permutationSet : PermutationSet) {
     let entropy = 0;
 
     for (let entity of entities) {
-        let entityPairs = pairs(entity);
+        let entityPermutations = permutations(entity);
 
-        for (let pair of pairSet.get()) {
-            let value = entityPairs.contains(pair) ? 1 : 0;
+        for (let permutation of permutationSet.get()) {
+            let value = entityPermutations.contains(permutation) ? 1 : 0;
             entropy += Math.log2((1 + value) / 2);
         }
     }
@@ -148,15 +127,15 @@ export function YstarBpairs (entities : Array<Entity>, pairSet : PairSet) {
 }
 
 export function Q(a : Entity, A : Array<Entity>) : number {
-    const pairSet = pairs(a);
+    const permutationSet = permutations(a);
 
-    return Qpairs(pairSet, A);
+    return Qpermutations(permutationSet, A);
 }
 
-export function Qpairs(pairs : PairSet, A : Array<Entity>) : number {
-    const Yavg = YstarBpairs(A,pairs) / (pairs.count() * A.length);
+export function Qpermutations(permutationSet : PermutationSet, A : Array<Entity>) : number {
+    const Yavg = YstarBpermutations(A,permutationSet) / A.length;
 
-    return (pairs.count() / setpairs(A).count()) * (1 - Yavg);
+    return (permutationSet.count() / setpermutations(A).count()) * (1 - Yavg);
 }
 
 function powerset (arr : Array<any>) : Array<any> {
@@ -166,21 +145,18 @@ function powerset (arr : Array<any>) : Array<any> {
     );
 }
 
-export function abstract (entities : Array<Entity>) : Array<PairSet> {
-    let pairs = setpairs(entities);
-    let subsets  = powerset(pairs.get());
+export function abstract (entities : Array<Entity>) : Array<Entity> {
     let maxQ = 0;
-    let best : Array<PairSet> = [];
+    let best : Array<Entity> = [];
 
-    for (let subset of subsets) {
-        const aPairs = new PairSet(subset);
-        const score = Qpairs(aPairs, entities);
+    for (let p of setpermutations(entities).get()) {
+        const score = Qpermutations(permutations(p), entities);
 
         if (score > maxQ) {
             maxQ = score;
-            best = [aPairs];
+            best = [p];
         } else if (score === maxQ) {
-            best.push(aPairs);
+            best.push(p);
         }
     }
 
