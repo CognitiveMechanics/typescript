@@ -196,9 +196,9 @@ export function flattenEntity (a : Entity) : Entity|Array<any> {
 }
 
 export function stringEntity (a : Entity) : string {
-    function inner (a : Entity) : Array<any> {
+    function inner (a : Entity) : any {
         if (a.isPrime()) {
-            return [a.name];
+            return a.name;
         } else {
             return a.components.map((b) => inner(b)).sort();
         }
@@ -210,7 +210,7 @@ export function stringEntity (a : Entity) : string {
 export function permute (entity : Entity) : Array<Entity> {
     function inner (a : Entity) : Array<any> {
         if (a.isPrime()) {
-            return powerset([a]);
+            return [a, []];
         } else {
             let children = E(a);
             let innered = children.map((c) => inner(c));
@@ -226,6 +226,7 @@ export function permute (entity : Entity) : Array<Entity> {
     for (let r of result) {
         while (Array.isArray(r) && r.length == 1) {
             r = r[0];
+
             final.push(r);
         }
     }
