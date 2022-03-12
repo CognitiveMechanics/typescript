@@ -159,7 +159,7 @@ export function Qpairs(pairs : PairSet, A : Array<Entity>) : number {
     return (pairs.count() / setpairs(A).count()) * (1 - Yavg);
 }
 
-function powerset (arr : Array<any>) {
+function powerset (arr : Array<any>) : Array<any> {
     return arr.reduceRight(
         (accumulator, a) => [...accumulator, ...accumulator.map((b : any) => [a, ...b])],
         [[]]
@@ -207,40 +207,61 @@ export function stringEntity (a : Entity) : string {
     return JSON.stringify(inner(a));
 }
 
+// export function permute (entity : Entity) : Array<Entity> {
+//     function inner (a : Entity) : Array<any> {
+//         // Debug.logDeep(E(a).map(b => inner(b).reduce((a, c) => a.concat(c))))
+//         let r = E(a);
+//
+//         console.log('r');
+//         Debug.logDeep(r);
+//
+//         let i = r.map(b => (b.isPrime() ? [b] : inner(b)))
+//
+//         console.log('i');
+//         Debug.logDeep(i);
+//
+//         let powersets = i.map(c => {
+//             return powerset(c)
+//         })
+//
+//         console.log('powersets')
+//         Debug.logDeep(powersets);
+//
+//         let z = p(powersets);
+//
+//         console.log('z');
+//         Debug.logDeep(z);
+//
+//         return z;
+//     }
+//
+//     return uniqueEntities(filterEmptyArrays(inner(entity)));
+// }
+
+
 export function permute (entity : Entity) : Array<Entity> {
-    function inner (a : Entity) {
+    function inner (a : Entity) : Array<any> {
         if (a.isPrime()) {
-            return [[],[a]];
+            return powerset([a]);
         } else {
-            let passes : Array<any> = [];
-            let cycle = [];
+            let children = E(a);
+            let innered = children.map((c) => inner(c));
+            let permed = p(innered);
 
-            for (let b of E(a)) {
-                const [pass, push] = inner(b);
-                passes = [...passes, ...pass, ...push];
-                cycle.push(push);
-            }
-
-            let pushes = p(cycle);
-
-            // console.log('pass');
-            // Debug.logDeep(passes);
-            // console.log('cycle');
-            // Debug.logDeep(cycle);
-            // console.log('push');
-            // Debug.logDeep(pushes);
-
-            return [passes, pushes];
+            return permed;
         }
-
     }
 
-    const [passes, pushes] = inner(entity);
+    let result = filterEmptyArrays(inner(entity));
 
+    return uniqueEntities(result);
+}
+
+function uniqueEntities (A : Array<any>) : Array<Entity> {
     let result : Array<Entity> = [];
     let keys : Array<string> = [];
 
-    for (let a of [...passes, ...pushes, entity]) {
+    for (let a of A) {
         if (Array.isArray(a) && ! a.length) {
             continue;
         }
@@ -264,37 +285,48 @@ export function permute (entity : Entity) : Array<Entity> {
     return result;
 }
 
-function p (arr : Array<any>) {
-    function inner (A : Array<any>, B : Array<any>, R : Array<any>) : Array<any> {
-        let combos = [];
+function p(a : Array<any>) : Array<any> {
+    let i, j, l, m, a1, o = [];
 
-        for (let a of A) {
-            combos.push([a]);
-            for (let b of B) {
-                combos.push([a,b]);
-                combos.push([b]);
+    if (!a || a.length == 0) {
+        return a;
+    }
+
+    a1 = a.splice(0, 1)[0];
+    a = p(a);
+
+    for (i = 0, l = a1.length; i < l; i++) {
+        if (a && a.length) {
+            for (j = 0, m = a.length; j < m; j++) {
+                o.push([a1[i]].concat(a[j]));
             }
-        }
-
-        if (R.length) {
-            return inner(combos, R.pop(), R);
         } else {
-            return combos;
+            o.push([a1[i]]);
         }
     }
 
-    function f (arr: Array<any>) : Array<any> {
-        if (Array.isArray(arr[0])) {
-            let a = arr.shift();
-            return f(a.concat(arr));
-        } else {
-            return arr;
-        }
-    }
-
-    return inner(arr.pop(), arr.pop(), arr).map((a) => f(a));
+    return o;
 }
 
+function filterEmptyArrays (A : Array<any>) : Array<any> {
+    let r = [];
+
+    for (let a of A) {
+        if (Array.isArray(a) && a.length == 0) {
+            continue;
+        } else if (Array.isArray(a)) {
+            const v = filterEmptyArrays(a);
+
+            if (v.length) {
+                r.push(v);
+            }
+        } else {
+            r.push(a);
+        }
+    }
+
+    return r;
+}
 
 function arrayToEntity (a : Array<any>) : Entity {
     let c : Array<Entity> = [];

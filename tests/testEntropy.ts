@@ -20,9 +20,10 @@ const h = C('h', [f, d]);
 // console.log(stringEntity(f));
 // console.log(stringEntity(h));
 console.log('str');
-Debug.logDeep(stringEntity(d));
+Debug.logDeep(stringEntity(h));
 console.log('sol');
-for (let t of permute(d)) {
+Debug.logDeep(permute(h));
+for (let t of permute(h)) {
     console.log(stringEntity(t));
 }
 

@@ -36,7 +36,7 @@ export default class Debug {
         console.log(util.inspect(state, {showHidden: false, depth: null}))
     }
 
-    static logDeep (a : any, d : number = 4) {
+    static logDeep (a : any, d : number = 6) {
         console.log(util.inspect(a, {showHidden: false, depth: d}))
     }
 
