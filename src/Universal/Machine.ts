@@ -57,16 +57,24 @@ export function specConfigurations (cs : Array<Record<string, any>>)
     let configs = C('[configurations]', []);
 
     for (let i = 0; i < cs.length; i += 1) {
-        configs = T(configs, c(i), C(
-            '[configuration]',
-            [
-                C('[pattern]', [k(pattern), cs[i].pattern]),
-                C('[instruction]', [k(instruction), cs[i].instruction]),
-            ]
-        ));
+        configs = T(configs, c(i), specConfiguration({
+            pattern: cs[i].pattern,
+            instruction: cs[i].instruction
+        }));
     }
 
     return configs;
+}
+
+
+export function specConfiguration (c : Record<string, any>) {
+    return C(
+        '[configuration]',
+        [
+            C('[pattern]', [k(pattern), c.pattern]),
+            C('[instruction]', [k(instruction), c.instruction]),
+        ]
+    );
 }
 
 export function evalUi (s : Entity, c : Entity, i : Entity) {

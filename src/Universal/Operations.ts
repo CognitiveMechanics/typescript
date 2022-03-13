@@ -332,9 +332,6 @@ export function specEval (i : Entity) {
 MU.state(
     specUi('eval', Proxy, Proxy, specEval(Proxy))
 ).relation((s) => {
-    console.log("EVAL");
-    Debug.logStructure(X(s, structure));
-
     return specUi(
         '!eval',
         X(s, structure),
