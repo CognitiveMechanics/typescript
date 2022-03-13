@@ -40,12 +40,13 @@ const opx = C('opx');
 const opxi = C('opxi');
 const [state, [state1, state2, state3]] = MHx.label('state', ['state1', 'state2', 'state3']);
 
-function specHx (name: string, a : Entity, b : Entity, x : Entity, c : Entity) {
+function specHx (name: string, a : Entity, b : Entity, x : Entity, c : Entity, r : Entity) {
     return C(name, [
         tag(op1, a),
         tag(op2, b),
         tag(opx, x),
         tag(configurations, c),
+        tag(result, r),
     ]);
 }
 
@@ -60,7 +61,7 @@ function specHxc (name: string, xi : Entity, c : Entity, i : Entity, s : Entity)
 }
 
 MHx.state(
-    specHx('Hx0', Proxy, Proxy, Proxy, DotProxy)
+    specHx('Hx0', Proxy, Proxy, Proxy, DotProxy, DotProxy)
 ).relation(
     (s) => {
         return specHx(
@@ -70,7 +71,8 @@ MHx.state(
             X(s, opx),
             X(MHx.run(
                 specHxc('R(Hxc)', X(s, opx), C('configurations'), c0, state1)
-            ), configurations)
+            ), configurations),
+            Proxy
         );
     }
 );
@@ -252,18 +254,25 @@ MHx.state(
 );
 
 MHx.state(
-    specHx('HxMU', Proxy, Proxy, Proxy, Proxy)
+    specHx('HxMU', Proxy, Proxy, Proxy, Proxy, DotProxy)
 ).relation(
     (s) => {
-        return specMU(
-            'R',
-            O([
-                tag(op1, X(s, op1)),
-                tag(op2, X(s, op2)),
-                tag(X(s, opx), Proxy),
-                Proxy
-            ]),
-            X(s, configurations)
+        return specHx(
+            'R(HxMU)',
+            Proxy,
+            Proxy,
+            Proxy,
+            Proxy,
+            X(X(MU.run(specMU(
+                'R',
+                O([
+                    tag(op1, X(s, op1)),
+                    tag(op2, X(s, op2)),
+                    tag(X(s, opx), Proxy),
+                    Proxy
+                ]),
+                X(s, configurations)
+            )), result), X(s, opx))
         )
     }
 );
@@ -271,7 +280,7 @@ MHx.state(
 DefaultKernel.extend(MHx);
 
 let r4 = DefaultKernel.run(
-    specHx('R(test)', c(2), c(3), c(2), Proxy)
+    specHx('R(test)', c(2), c(3), c(2), Proxy, Proxy)
 );
 
-console.log(X(X(r4, result), c(2)));
+console.log(X(r4, result));
