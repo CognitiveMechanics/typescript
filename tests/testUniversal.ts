@@ -77,7 +77,7 @@ MHx.state(
     }
 );
 
-function specHxOp (a : Entity, b : Entity, r : Entity, x : Entity) {
+function specHxOp (a : Entity, b : Entity, x : Entity, r : Entity) {
     return O([
         tag(op1, a),
         tag(op2, b),
@@ -85,7 +85,7 @@ function specHxOp (a : Entity, b : Entity, r : Entity, x : Entity) {
     ]);
 }
 
-function specopHx (a : Entity, b : Entity, r : Entity, x : Entity) {
+function specopHx (a : Entity, b : Entity, x : Entity,  r : Entity) {
     return specopC3(
         specopTag(op1, a),
         specopTag(op2, b),
@@ -103,12 +103,12 @@ MHx.state(
             T(X(s, configurations), X(s, index), C(
                 '[configuration]',
                 [
-                    tag(pattern, specHxOp(Proxy, Proxy, DotProxy, X(s, opxi))),
+                    tag(pattern, specHxOp(Proxy, Proxy, X(s, opxi), DotProxy)),
                     tag(instruction, specopHx(
                         specRef(op1),
                         specRef(op2),
-                        c1,
-                        X(s, opxi)
+                        X(s, opxi),
+                        c1
                     )),
                 ]
             )),
@@ -128,12 +128,12 @@ MHx.state(
             T(X(s, configurations), X(s, index), C(
                 '[configuration]',
                 [
-                    tag(pattern, specHxOp(Proxy, Proxy, DotProxy, X(s, opxi))),
+                    tag(pattern, specHxOp(Proxy, Proxy, X(s, opxi), DotProxy)),
                     tag(instruction, specopHx(
                         specRef(op1),
                         specRef(op2),
-                        c0,
-                        X(s, opxi)
+                        X(s, opxi),
+                        c0
                     )),
                 ]
             )),
@@ -153,12 +153,12 @@ MHx.state(
             T(X(s, configurations), X(s, index), C(
                 '[configuration]',
                 [
-                    tag(pattern, specHxOp(Proxy, Proxy, DotProxy, X(s, opxi))),
+                    tag(pattern, specHxOp(Proxy, Proxy, X(s, opxi), DotProxy)),
                     tag(instruction, specopHx(
                         specRef(op1),
                         specRef(op2),
-                        specRef(op1),
-                        X(s, opxi)
+                        X(s, opxi),
+                        specRef(op1)
                     )),
                 ]
             )),
@@ -178,22 +178,22 @@ MHx.state(
             T(X(s, configurations), X(s, index), C(
                 '[configuration]',
                 [
-                    tag(pattern, specHxOp(Proxy, not0, Proxy, X(s, opxi))),
+                    tag(pattern, specHxOp(Proxy, not0, X(s, opxi), Proxy)),
                     tag(instruction, specopHx(
                         specRef(op1),
                         specopiH0(specRef(op2)),
+                        X(s, opxi),
                         specopX(
                             specEval(
                                 specopHx(
                                     specRef(op1),
                                     specRef(X(s, opxi)),
-                                    Proxy,
-                                    iH0(X(s, opxi))
+                                    iH0(X(s, opxi)),
+                                    Proxy
                                 )
                             ),
                             iH0(X(s, opxi))
-                        ),
-                        X(s, opxi)
+                        )
                     )),
                 ]
             )),
@@ -213,12 +213,12 @@ MHx.state(
             T(X(s, configurations), X(s, index), C(
                 '[configuration]',
                 [
-                    tag(pattern, specHxOp(Proxy, not0, Proxy, X(s, opxi))),
+                    tag(pattern, specHxOp(Proxy, not0, X(s, opxi), Proxy)),
                     tag(instruction, specopHx(
                         specRef(op1),
                         specopiH0(specRef(op2)),
-                        specopH0(specRef(X(s, opxi))),
-                        X(s, opxi)
+                        X(s, opxi),
+                        specopH0(specRef(X(s, opxi)))
                     )),
                 ]
             )),
@@ -238,12 +238,12 @@ MHx.state(
             T(X(s, configurations), X(s, index), C(
                 '[configuration]',
                 [
-                    tag(pattern, specHxOp(Proxy, c0, Proxy, X(s, opxi))),
+                    tag(pattern, specHxOp(Proxy, c0, X(s, opxi), Proxy)),
                     tag(instruction, specopHx(
                         Proxy,
                         Proxy,
-                        specRef(X(s, opxi)),
-                        X(s, opxi)
+                        X(s, opxi),
+                        specRef(X(s, opxi))
                     )),
                 ]
             )),
