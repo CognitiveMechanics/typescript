@@ -8,7 +8,7 @@ This package is a companion to the book, *Cognitive Mechanics*.
 
 We'll begin by demonstrating the framework for cognitive mechanical simulations by way of its basic structures and operations.
 
-\newpage
+
 
 ### Imports
 
@@ -179,7 +179,7 @@ Y(l, dot(l)) === TrueEntity
 
 Now we'll take a look at how the operations from appendix A can be put to use as machines.
 
-\newpage
+
 
 ### Creating a New Machine
 
@@ -367,7 +367,7 @@ The above produces the more helpful (if not exactly beautiful) output:
 
 Our framework also comes with utilities for working with numeric representations, demonstrated in this appendix.
 
-\newpage
+
 
 ### Numeric Entities
 
@@ -624,7 +624,7 @@ We'll now use the framework to construct a universal machine, `MU`, the simulate
 
 With `MU`, we will demonstrate the emulation of `Mc1` and `Mc2`.
 
-\newpage
+
 
 
 ### Machine Structure
