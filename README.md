@@ -31,7 +31,7 @@ allows you to modularize your code into separate machines, and to load them on d
 
 ### Construction
 
-`C` is a function that represents operation $C$. It takes two arguments: the first is a `name` that is used as an identifier to make debugging easier; the second is an `Array<Entity>` of the `components` of the new concept you are constructing.
+`C` is a function that represents operation <img src="https://render.githubusercontent.com/render/math?math=C&mode=inline">. It takes two arguments: the first is a `name` that is used as an identifier to make debugging easier; the second is an `Array<Entity>` of the `components` of the new concept you are constructing.
 
 
 
@@ -45,9 +45,9 @@ const c = C('c', [a, b]); // c is composed of a and b
 
 This example is the equivalent of:
 
-$$ a = \text{«a»} $$
-$$ b = \text{«b»} $$
-$$ c = \text{«c»} = \langle a, b \rangle $$
+<img src="https://render.githubusercontent.com/render/math?math= a %3D \text{«a»} &mode=block">
+<img src="https://render.githubusercontent.com/render/math?math= b %3D \text{«b»} &mode=block">
+<img src="https://render.githubusercontent.com/render/math?math= c %3D \text{«c»} = \langle a, b \rangle &mode=block">
 
 `O` is a synonym for `C` that does not have a first parameter for its name. This can be used to quickly construct an anonymous conceptual structure for convenient use. It is discouraged from overuse because in larger structures it will be very difficult to keep track of which object is which.
 
@@ -59,7 +59,7 @@ const d = O([a, b]); // d is an anonymous concept
 
 ### Enumeration
 
-`E` is a function that represents to the operation $E$:
+`E` is a function that represents to the operation <img src="https://render.githubusercontent.com/render/math?math=E&mode=inline">:
 
 
 
@@ -71,13 +71,13 @@ const comps = E(c); // comps == [a,b]
 
 This is equivalent to:
 
-$$ E(c) \to \{a, b\} $$
+<img src="https://render.githubusercontent.com/render/math?math= E(c) \to \{a, b\} &mode=block">
 
 
 
 ### Tags, Extraction & Transclusion
 
-For implementation reasons, every tag used in extraction and transclusion is required to be a key. The key is required when constructing the subject of the operation, but not on the tag passed to `X` or `T`. Any concept can be made into a key with operation `k`, the analogue of $\kappa$:
+For implementation reasons, every tag used in extraction and transclusion is required to be a key. The key is required when constructing the subject of the operation, but not on the tag passed to `X` or `T`. Any concept can be made into a key with operation `k`, the analogue of <img src="https://render.githubusercontent.com/render/math?math=\kappa&mode=inline">:
 
 
 
@@ -128,7 +128,7 @@ import DotProxy from "cognitive-mechanics/Proxy/DotProxy";
 
 ### Matching & Dot
 
-`Y` is a function that represents to the operation $Y$. In the framework there are two concepts we may need to import: `TrueEntity`, which represents «true»—and `NullEntity`, which represents «false»;
+`Y` is a function that represents to the operation <img src="https://render.githubusercontent.com/render/math?math=Y&mode=inline">. In the framework there are two concepts we may need to import: `TrueEntity`, which represents «true»—and `NullEntity`, which represents «false»;
 
 
 
@@ -154,11 +154,11 @@ Y(a, b) === NullEntity
 
 These are equivalent to:
 
-$$ Y(a,[\ ]) \to \text{«true»} $$
-$$ Y([\ ],[\cdot]) \to \text{«true»} $$
-$$ Y(a,b) \to \text{«false»} $$
+<img src="https://render.githubusercontent.com/render/math?math= Y(a,[\ ]) \to \text{«true»} &mode=block">
+<img src="https://render.githubusercontent.com/render/math?math= Y([\ ],[\cdot]) \to \text{«true»} &mode=block">
+<img src="https://render.githubusercontent.com/render/math?math= Y(a,b) \to \text{«false»} &mode=block">
 
-And we can add the dot affix to any concept using the `dot()` function. For example, we can represent $\dot{«0»}$ as `dot(c0)`.
+And we can add the dot affix to any concept using the `dot()` function. For example, we can represent <img src="https://render.githubusercontent.com/render/math?math=\dot{«0»}&mode=inline"> as `dot(c0)`.
 
 
 
@@ -183,7 +183,7 @@ Now we'll take a look at how the operations from appendix A can be put to use as
 
 ### Creating a New Machine
 
-Creating a new machine is as easy as creating a new instance of type `Kernel`. In this chapter we will demonstrate how to build a simulated machine `MC` equivalent to the machine $\mathcal{M}_C$ from §[composing-machine-definition].
+Creating a new machine is as easy as creating a new instance of type `Kernel`. In this chapter we will demonstrate how to build a simulated machine `MC` equivalent to the machine <img src="https://render.githubusercontent.com/render/math?math=\mathcal{M}_C&mode=inline"> from §[composing-machine-definition].
 
 
 ```
@@ -194,12 +194,12 @@ const MC = new Kernel();
 
 ### State Specifiers
 
-Now that we have our machine instance `MC`, need to create a $\sigma$-specifier. In our simulations, a specifier is simply a function that creates a new structure from the given parameters.
+Now that we have our machine instance `MC`, need to create a <img src="https://render.githubusercontent.com/render/math?math=\sigma&mode=inline">-specifier. In our simulations, a specifier is simply a function that creates a new structure from the given parameters.
 
-In our case, we will define `specC`, the analogue of $\sigma_C$. Let's look at our $\sigma_C$ definition from §[sigma-C-definition]:
+In our case, we will define `specC`, the analogue of <img src="https://render.githubusercontent.com/render/math?math=\sigma_C$. Let's look at our $\sigma_C&mode=inline"> definition from §[sigma-C-definition]:
 
-$$ \sigma_c(s, o_1, o_2) ≡ \Big\langle \big\langle \text{«state»}, s \big\rangle, \big\langle \text{«op1»}, o_1 \big\rangle, \big\langle \text{«op2»}, o_2 \big\rangle \Big\rangle $$
-$$ : \Upsilon\big( \big\{\text{«begin»}, \text{«end»}\big\}, \ \ \text{«state»} \big) $$
+<img src="https://render.githubusercontent.com/render/math?math= \sigma_c(s, o_1, o_2) ≡ \Big\langle \big\langle \text{«state»}, s \big\rangle, \big\langle \text{«op1»}, o_1 \big\rangle, \big\langle \text{«op2»}, o_2 \big\rangle \Big\rangle &mode=block">
+<img src="https://render.githubusercontent.com/render/math?math= : \Upsilon\big( \big\{\text{«begin»}, \text{«end»}\big\}, \ \ \text{«state»} \big) &mode=block">
 
 Our equivalent `specC` will be defined as:
 
@@ -226,11 +226,11 @@ The `name` parameter allows you to give a name to the state you specify.
 
 Note the utility label `label`, whose first parameter is a "label" concept, and whose second parameter is a list of specific values of that label. The top line from the example above represents:
 
-$$ \Upsilon\big( \big\{\text{«begin»}, \text{«end»}\big\}, \ \ \text{«state»} \big) $$
+<img src="https://render.githubusercontent.com/render/math?math= \Upsilon\big( \big\{\text{«begin»}, \text{«end»}\big\}, \ \ \text{«state»} \big) &mode=block">
 
 ### Machine States & Relations
 
-Now that we have our machine and a specifier, we will define our only state for $\mathcal{M}_C$, $s_{0_C}$ from §[s0c-definition]:
+Now that we have our machine and a specifier, we will define our only state for <img src="https://render.githubusercontent.com/render/math?math=\mathcal{M}_C$, $s_{0_C}&mode=inline"> from §[s0c-definition]:
 
 
 ```
@@ -254,8 +254,8 @@ in the defined relation.
 
 Compare to the state and relation defined in §[s0c-definition] and §[s0c-relation]:
 
-$$ s_{0_C} = \sigma_C(\text{«begin»},\  [\ ],\  [\ ]) $$
-$$ R(s_{0_C}) \to \sigma_C\big(\text{«end»},\  [\ ],\  \langle s_{0_C}\text{[op1]}, s_{0_C}\text{[op2]} \rangle\big) $$
+<img src="https://render.githubusercontent.com/render/math?math= s_{0_C} %3D \sigma_C(\text{«begin»},\  [\ ],\  [\ ]) &mode=block">
+<img src="https://render.githubusercontent.com/render/math?math= R(s_{0_C}) \to \sigma_C\big(\text{«end»},\  [\ ],\  \langle s_{0_C}\text{[op1]}, s_{0_C}\text{[op2]} \rangle\big) &mode=block">
 
 ### Machine Specifiers
 
@@ -383,7 +383,7 @@ const anynum = c0;
 
 ### Operations
 
-Our numbers wouldn't be of much use without the ability to increment them with `H0`—the equivalent of $H_0$.
+Our numbers wouldn't be of much use without the ability to increment them with `H0`—the equivalent of <img src="https://render.githubusercontent.com/render/math?math=H_0&mode=inline">.
 
 
 
@@ -400,11 +400,11 @@ function H0 (n : Entity) {
 
 The above implementation is actually slightly simplified to remove some input validation and caching logic that prevents duplicated of the same number being produced, which were removed for clarity.  The important code in `H0` is `return C(name, [k(num), n])`.
 
-Compare with our mathematical definition of $H_0$ from §[counting-successor-definition]:
+Compare with our mathematical definition of <img src="https://render.githubusercontent.com/render/math?math=H_0&mode=inline"> from §[counting-successor-definition]:
 
-$$ H_0(n) ≡ C(\{ \text{«num»}, n \}) $$
+<img src="https://render.githubusercontent.com/render/math?math= H_0(n) ≡ C(\{ \text{«num»}, n \}) &mode=block">
 
-Now we can define a very simple function `iH0`—the equivalent of $H_0^{-1}$:
+Now we can define a very simple function `iH0`—the equivalent of <img src="https://render.githubusercontent.com/render/math?math=H_0^{-1}&mode=inline">:
 
 
 
@@ -416,9 +416,9 @@ function iH0 (n : Entity) {
 
 
 
-`iH0` is based on $H_0^{-1}$ from §[counting-anti-successor-definition]:
+`iH0` is based on <img src="https://render.githubusercontent.com/render/math?math=H_0^{-1}&mode=inline"> from §[counting-anti-successor-definition]:
 
-$$ H_0^{-1}(n) ≡ X(\langle n \rangle, \text{«num»}) $$
+<img src="https://render.githubusercontent.com/render/math?math= H_0^{-1}(n) ≡ X(\langle n \rangle, \text{«num»}) &mode=block">
 
 ### Other Numbers
 
@@ -466,7 +466,7 @@ import {num, c0, c1, anynum, not0, H0, iH0}
 
 ### Adding Machine
 
-Now we have the infrastructure in place to implement an adding machine, the equivalent of $\mathcal{M}_{1_c}$ defined in §[counting-addition-machine].
+Now we have the infrastructure in place to implement an adding machine, the equivalent of <img src="https://render.githubusercontent.com/render/math?math=\mathcal{M}_{1_c}&mode=inline"> defined in §[counting-addition-machine].
 
 Below we define our machine's `Kernel` `Mc1` and specifier `specc1`, and states:
 
@@ -522,7 +522,7 @@ Mc1.state(
 ```
 
 
-With the above we can define a new operation `H1c`, the equivalent of $H_{1_c}$:
+With the above we can define a new operation `H1c`, the equivalent of <img src="https://render.githubusercontent.com/render/math?math=H_{1_c}&mode=inline">:
 
 
 ```
@@ -542,7 +542,7 @@ let c = H1c(c(24), c(6)); // c == c(30)
 
 ### Multiplying Machine
 
-By repeating the operation `H1c`, we can create a multiplication operation `H2c`—representing $H_{2_c}$. Compare with $\mathcal{M}_{2_c}$, defined in §[counting-multiplication-machine]:
+By repeating the operation `H1c`, we can create a multiplication operation `H2c`—representing <img src="https://render.githubusercontent.com/render/math?math=H_{2_c}$. Compare with $\mathcal{M}_{2_c}&mode=inline">, defined in §[counting-multiplication-machine]:
 
 
 ```
@@ -620,7 +620,7 @@ Notice the call to `MC1.run()` in the second relation. The same pattern holds fo
 
 ## D Universal Simulations
 
-We'll now use the framework to construct a universal machine, `MU`, the simulated representation of $\mathcal{M}_U$ from §[universal-conceptual-machine-definition].
+We'll now use the framework to construct a universal machine, `MU`, the simulated representation of <img src="https://render.githubusercontent.com/render/math?math=\mathcal{M}_U&mode=inline"> from §[universal-conceptual-machine-definition].
 
 With `MU`, we will demonstrate the emulation of `Mc1` and `Mc2`.
 
@@ -669,7 +669,7 @@ function specMU (name: string, s : Entity, c : Entity) {
 
 ### Instruction Specifiers
 
-We'll need an instruction specifier `specUi()`, the equivalent of $\epsilon$ defined in §[epsilon-definition]:
+We'll need an instruction specifier `specUi()`, the equivalent of <img src="https://render.githubusercontent.com/render/math?math=\epsilon&mode=inline"> defined in §[epsilon-definition]:
 
 
 ```
@@ -689,7 +689,7 @@ function specUi (name: string, s : Entity,
 
 ### Instruction Evaluation
 
-As well as ```evalUi()```, the equivalent of operation $V$, defined in §[operation-V-definition]:
+As well as ```evalUi()```, the equivalent of operation <img src="https://render.githubusercontent.com/render/math?math=V&mode=inline">, defined in §[operation-V-definition]:
 
 
 ```
@@ -707,7 +707,7 @@ function evalUi (s : Entity, c : Entity, i : Entity) {
 
 And now we define the machine states for our evaluation loop. Compare with the states from §[universal-evaluation-cycle].
 
-First is $s_{0_U}$, which initializes the system by setting «index» to «0» and «next» to the first configuration.
+First is <img src="https://render.githubusercontent.com/render/math?math=s_{0_U}&mode=inline">, which initializes the system by setting «index» to «0» and «next» to the first configuration.
 
 
 ```
@@ -729,7 +729,7 @@ MU.state(
 ```
 
 
-Second is $s_{1_U}$, which evaluates the instruction when a matching configuration is found,m and sets the «index» back to «0»:
+Second is <img src="https://render.githubusercontent.com/render/math?math=s_{1_U}&mode=inline">, which evaluates the instruction when a matching configuration is found,m and sets the «index» back to «0»:
 
 
 ```
@@ -755,7 +755,7 @@ MU.state(
 ```
 
 
-Next is $s_{2_U}$, which stops when there is no «next» operation:
+Next is <img src="https://render.githubusercontent.com/render/math?math=s_{2_U}&mode=inline">, which stops when there is no «next» operation:
 
 
 ```
@@ -777,7 +777,7 @@ MU.state(
 ```
 
 
-And finally $s_{23_U}$, which procedes to the next configuration when the current is not a match:
+And finally <img src="https://render.githubusercontent.com/render/math?math=s_{23_U}&mode=inline">, which procedes to the next configuration when the current is not a match:
 
 
 ```
@@ -833,7 +833,7 @@ const op4 = C('op4');
 
 These concepts tag the role of each argument to the operation specifiers we'll soon be defining.
 
-For our operation specifiers related to operation $C$, we need the following entity to serve as our value for `op`:
+For our operation specifiers related to operation <img src="https://render.githubusercontent.com/render/math?math=C&mode=inline">, we need the following entity to serve as our value for `op`:
 
 
 ```
@@ -897,7 +897,7 @@ MU.state(
 
 Notice we wrap the structure in `specUi()`, and then call `evalUi()` on each operand in order to recursively evaluate down the hierarchy.
 
-Let's proceed with our other remaining definitions related to $C$:
+Let's proceed with our other remaining definitions related to <img src="https://render.githubusercontent.com/render/math?math=C&mode=inline">:
 
 
 ```
@@ -939,7 +939,7 @@ MU.state(
 ```
 
 
-We require an operation for the specifier $\kappa$ in our simulations:
+We require an operation for the specifier <img src="https://render.githubusercontent.com/render/math?math=\kappa&mode=inline"> in our simulations:
 
 
 ```
@@ -1015,7 +1015,7 @@ MU.state(
 ```
 
 
-Operations $X$, $T$, $H_0$, and so on all have very similar definitions, so I will only show $X$ for brevity:
+Operations <img src="https://render.githubusercontent.com/render/math?math=X$, $T$, $H_0$, and so on all have very similar definitions, so I will only show $X&mode=inline"> for brevity:
 
 
 ```
@@ -1193,7 +1193,7 @@ function specopAdd (a : Entity, b : Entity, r : Entity)
 ```
 
 
-Now we define our initial machine state for the numerical operation $6 \times 4$ by combining the operations from an addition and multiplication machine into a single initial state of $MU$.
+Now we define our initial machine state for the numerical operation <img src="https://render.githubusercontent.com/render/math?math=6 \times 4$ by combining the operations from an addition and multiplication machine into a single initial state of $MU&mode=inline">.
 
 Each configuration shown below has an equivalent pattern and instruction defined in §[univeral-multiplication-machine]:
 
