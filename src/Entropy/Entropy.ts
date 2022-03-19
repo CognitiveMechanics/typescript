@@ -153,6 +153,7 @@ export function abstract (entities : Array<Entity>, max : number = 1) : Array<Ab
     let abstractions : Array<Abstraction> = [];
 
     for (let p of setpermutations(entities).get()) {
+        console.log(p);
         let inEvery = true;
 
         for (let e of entities) {
