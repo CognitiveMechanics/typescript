@@ -45,9 +45,9 @@ const c = C('c', [a, b]); // c is composed of a and b
 
 This example is the equivalent of:
 
-<img src="https://render.githubusercontent.com/render/math?math= a %3D \text{«a»} &mode=block">
-<img src="https://render.githubusercontent.com/render/math?math= b %3D \text{«b»} &mode=block">
-<img src="https://render.githubusercontent.com/render/math?math= c %3D \text{«c»} = \langle a, b \rangle &mode=block">
+<img src="https://render.githubusercontent.com/render/math?math=a %3D \text{«a»} &mode=block">
+<img src="https://render.githubusercontent.com/render/math?math=b %3D \text{«b»} &mode=block">
+<img src="https://render.githubusercontent.com/render/math?math=c %3D \text{«c»} = \langle a, b \rangle &mode=block">
 
 `O` is a synonym for `C` that does not have a first parameter for its name. This can be used to quickly construct an anonymous conceptual structure for convenient use. It is discouraged from overuse because in larger structures it will be very difficult to keep track of which object is which.
 
@@ -71,7 +71,7 @@ const comps = E(c); // comps == [a,b]
 
 This is equivalent to:
 
-<img src="https://render.githubusercontent.com/render/math?math= E(c) \to \{a, b\} &mode=block">
+<img src="https://render.githubusercontent.com/render/math?math=E(c) \to \{a, b\} &mode=block">
 
 
 
@@ -154,9 +154,9 @@ Y(a, b) === NullEntity
 
 These are equivalent to:
 
-<img src="https://render.githubusercontent.com/render/math?math= Y(a,[\ ]) \to \text{«true»} &mode=block">
-<img src="https://render.githubusercontent.com/render/math?math= Y([\ ],[\cdot]) \to \text{«true»} &mode=block">
-<img src="https://render.githubusercontent.com/render/math?math= Y(a,b) \to \text{«false»} &mode=block">
+<img src="https://render.githubusercontent.com/render/math?math=Y(a,[\ ]) \to \text{«true»} &mode=block">
+<img src="https://render.githubusercontent.com/render/math?math=Y([\ ],[\cdot]) \to \text{«true»} &mode=block">
+<img src="https://render.githubusercontent.com/render/math?math=Y(a,b) \to \text{«false»} &mode=block">
 
 And we can add the dot affix to any concept using the `dot()` function. For example, we can represent <img src="https://render.githubusercontent.com/render/math?math=\dot{«0»}&mode=inline"> as `dot(c0)`.
 
@@ -198,8 +198,8 @@ Now that we have our machine instance `MC`, need to create a <img src="https://r
 
 In our case, we will define `specC`, the analogue of <img src="https://render.githubusercontent.com/render/math?math=\sigma_C$. Let's look at our $\sigma_C&mode=inline"> definition from §[sigma-C-definition]:
 
-<img src="https://render.githubusercontent.com/render/math?math= \sigma_c(s, o_1, o_2) ≡ \Big\langle \big\langle \text{«state»}, s \big\rangle, \big\langle \text{«op1»}, o_1 \big\rangle, \big\langle \text{«op2»}, o_2 \big\rangle \Big\rangle &mode=block">
-<img src="https://render.githubusercontent.com/render/math?math= : \Upsilon\big( \big\{\text{«begin»}, \text{«end»}\big\}, \ \ \text{«state»} \big) &mode=block">
+<img src="https://render.githubusercontent.com/render/math?math=\sigma_c(s, o_1, o_2) ≡ \Big\langle \big\langle \text{«state»}, s \big\rangle, \big\langle \text{«op1»}, o_1 \big\rangle, \big\langle \text{«op2»}, o_2 \big\rangle \Big\rangle &mode=block">
+<img src="https://render.githubusercontent.com/render/math?math=: \Upsilon\big( \big\{\text{«begin»}, \text{«end»}\big\}, \ \ \text{«state»} \big) &mode=block">
 
 Our equivalent `specC` will be defined as:
 
@@ -226,7 +226,7 @@ The `name` parameter allows you to give a name to the state you specify.
 
 Note the utility label `label`, whose first parameter is a "label" concept, and whose second parameter is a list of specific values of that label. The top line from the example above represents:
 
-<img src="https://render.githubusercontent.com/render/math?math= \Upsilon\big( \big\{\text{«begin»}, \text{«end»}\big\}, \ \ \text{«state»} \big) &mode=block">
+<img src="https://render.githubusercontent.com/render/math?math=\Upsilon\big( \big\{\text{«begin»}, \text{«end»}\big\}, \ \ \text{«state»} \big) &mode=block">
 
 ### Machine States & Relations
 
@@ -254,8 +254,8 @@ in the defined relation.
 
 Compare to the state and relation defined in §[s0c-definition] and §[s0c-relation]:
 
-<img src="https://render.githubusercontent.com/render/math?math= s_{0_C} %3D \sigma_C(\text{«begin»},\  [\ ],\  [\ ]) &mode=block">
-<img src="https://render.githubusercontent.com/render/math?math= R(s_{0_C}) \to \sigma_C\big(\text{«end»},\  [\ ],\  \langle s_{0_C}\text{[op1]}, s_{0_C}\text{[op2]} \rangle\big) &mode=block">
+<img src="https://render.githubusercontent.com/render/math?math=s_{0_C} %3D \sigma_C(\text{«begin»},\  [\ ],\  [\ ]) &mode=block">
+<img src="https://render.githubusercontent.com/render/math?math=R(s_{0_C}) \to \sigma_C\big(\text{«end»},\  [\ ],\  \langle s_{0_C}\text{[op1]}, s_{0_C}\text{[op2]} \rangle\big) &mode=block">
 
 ### Machine Specifiers
 
@@ -402,7 +402,7 @@ The above implementation is actually slightly simplified to remove some input va
 
 Compare with our mathematical definition of <img src="https://render.githubusercontent.com/render/math?math=H_0&mode=inline"> from §[counting-successor-definition]:
 
-<img src="https://render.githubusercontent.com/render/math?math= H_0(n) ≡ C(\{ \text{«num»}, n \}) &mode=block">
+<img src="https://render.githubusercontent.com/render/math?math=H_0(n) ≡ C(\{ \text{«num»}, n \}) &mode=block">
 
 Now we can define a very simple function `iH0`—the equivalent of <img src="https://render.githubusercontent.com/render/math?math=H_0^{-1}&mode=inline">:
 
@@ -418,7 +418,7 @@ function iH0 (n : Entity) {
 
 `iH0` is based on <img src="https://render.githubusercontent.com/render/math?math=H_0^{-1}&mode=inline"> from §[counting-anti-successor-definition]:
 
-<img src="https://render.githubusercontent.com/render/math?math= H_0^{-1}(n) ≡ X(\langle n \rangle, \text{«num»}) &mode=block">
+<img src="https://render.githubusercontent.com/render/math?math=H_0^{-1}(n) ≡ X(\langle n \rangle, \text{«num»}) &mode=block">
 
 ### Other Numbers
 
